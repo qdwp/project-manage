@@ -18,7 +18,7 @@ import UserManage from '../view/user/UserManage';
 import ChangePassword from '../view/user/ChangePassword';
 
 // 项目管理s
-import ProjectManage from '../view/project/ProjectManage';
+import ProjectManage from '../view/project/projectManage/ProjectManage';
 
 // 针对IE8的补丁(_IEVersion from index.html)
 if (!isNaN(window._IEVersion) && window._IEVersion < 9) {

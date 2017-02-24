@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form, Row, Col, Input, Select } from 'antd';
-import { getLoginInfo } from '../../common/util';
+import { getLoginInfo } from '../../../common/util';
 
 const FormItem = Form.Item;
 const Option = Select.Option;

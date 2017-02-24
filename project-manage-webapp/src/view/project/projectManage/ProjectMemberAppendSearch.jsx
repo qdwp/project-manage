@@ -1,6 +1,6 @@
 import React from 'react';
 import { Row, Col, Form, Input, Button, Icon, Select } from 'antd';
-import { filterObject } from '../../common/util';
+import { filterObject } from '../../../common/util';
 
 const Option = Select.Option;
 

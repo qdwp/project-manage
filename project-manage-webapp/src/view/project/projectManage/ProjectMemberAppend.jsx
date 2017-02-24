@@ -1,10 +1,10 @@
 import React from 'react';
 import { Button, Modal, Table, Icon, Transfer, Form } from 'antd';
-import { openNotice, buildTableTip } from '../../common/antdUtil';
-import { url } from '../../config/server';
-import { rspInfo } from '../../common/authConstant';
-import { getLoginInfo } from '../../common/util';
-import TdPageTable from '../../component/TdPageTable';
+import { openNotice, buildTableTip } from '../../../common/antdUtil';
+import { url } from '../../../config/server';
+import { rspInfo } from '../../../common/authConstant';
+import { getLoginInfo } from '../../../common/util';
+import TdPageTable from '../../../component/TdPageTable';
 import ProjectMemberAppendSearch from './ProjectMemberAppendSearch';
 
 class ProjectMemberAppend extends React.Component {
@@ -102,7 +102,7 @@ class ProjectMemberAppend extends React.Component {
         />
         <p className="br" />
 
-        <TdPageTable rowKey={record => record.PRO_ID}
+        <TdPageTable rowKey={record => record.USER_ID}
           rowSelectCallback={this.handlerRowSelect.bind(this)}
           url={url.user.list}
           loadParam={this.state.tdTableParam}

@@ -1,13 +1,13 @@
 import React from 'react';
 import { Button, Modal, Table, Icon, Transfer, Form } from 'antd';
 import QueueAnim from 'rc-queue-anim';
-import TdCard from '../../component/TdCard';
-import { openNotice, buildTableTip } from '../../common/antdUtil';
-import { url } from '../../config/server';
-import { rspInfo } from '../../common/authConstant';
-import { callAjax, parseDate, getLoginInfo } from '../../common/util';
-import { filterObject } from '../../common/util';
-import TdPageTable from '../../component/TdPageTable';
+import TdCard from '../../../component/TdCard';
+import { openNotice, buildTableTip } from '../../../common/antdUtil';
+import { url } from '../../../config/server';
+import { rspInfo } from '../../../common/authConstant';
+import { callAjax, parseDate, getLoginInfo } from '../../../common/util';
+import { filterObject } from '../../../common/util';
+import TdPageTable from '../../../component/TdPageTable';
 import ProjectManageSearchForm from './ProjectManageSearchForm';
 import ProjectManageEditForm from './ProjectManageEditForm';
 import ProjectMemberAppend from './ProjectMemberAppend';
@@ -326,8 +326,11 @@ class ProjectManage extends React.Component {
   handleDetailLinkClick(text, record, key) {
     console.log(record, key);
     this.setState({
+      call: true,
       project: record.PRO_ID,
       appendVisible: !this.state.appendVisible,
+    }, () => {
+      this.setState({ call: false });
     });
   }
 
@@ -337,12 +340,51 @@ class ProjectManage extends React.Component {
       call: true,
       project: record.PRO_ID,
       appendVisible: !this.state.appendVisible,
+    }, () => {
+      this.setState({ call: false });
     });
   }
 
+  // 将选中的成员用户添加到指定项目
   appendOk(keys, rows) {
     console.log(keys, rows);
+    // console.log(this.state.project);
     this.setState({ appendVisible: false });
+    // const opt = {
+    //   url: url.project.update,
+    //   data: formData,
+    // };
+    // const obj = this;
+    // callAjax(opt, (result) => {
+    //   console.log(result);
+    //   if (result.rspCode === rspInfo.RSP_SUCCESS) {
+    //     openNotice('success', '更新项目信息成功', '提示');
+    //     // obj.props.form.resetFields();
+    //     obj.setState({
+    //       confirmLoading: false,
+    //       modalVisible: !obj.state.modalVisible,
+    //       modalOprType: 0,
+    //       tdTableReload: true,
+    //       tableSelectedRowKeys: [],
+    //       tableSelectedRows: [],
+    //     }, () => {
+    //       obj.setState({
+    //         tdTableReload: false,
+    //       });
+    //     });
+    //   } else {
+    //     openNotice('error', result.rspMsg, '修改项目失败');
+    //     obj.setState({
+    //       confirmLoading: false,
+    //     });
+    //   }
+    // }, (req, info, o) => {
+    //   console.log(req, info, o);
+    //   openNotice('error', rspInfo.RSP_NETWORK_ERROR, '提示');
+    //   obj.setState({
+    //     confirmLoading: false,
+    //   });
+    // });
   }
 
   appendNo() {
