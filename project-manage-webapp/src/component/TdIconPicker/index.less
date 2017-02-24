@@ -1,0 +1,59 @@
+.td-icon-picker {
+  position: relative;
+
+  .td-icon-picker-content {
+    position: absolute;
+    display: inline-block;
+    top: 34px;
+    left: 0px;
+    padding: 4px;
+    text-align: center;
+    box-sizing: border-box;
+    background-color: white;
+    border: 1px solid #d9d9d9;
+    border-radius: 6px;
+    box-shadow: 0 1px 6px rgba(100, 100, 100, 0.2);
+    z-index: 1050;
+    
+    .ant-tabs-bar {
+      margin-bottom: 8px;
+      .ant-tabs-tab {
+        margin-right: 0px;
+        .ant-tabs-tab-inner {
+          padding: 4px 8px 8px 8px;
+        }
+      }
+    }
+
+    .td-icon-picker-table {
+      margin: auto;
+      font-size: 18px;
+      margin-bottom: 4px;
+      td {
+        padding: 2px 8px;
+        cursor: pointer;
+        -webkit-transition: all .5s ease;
+        transition: all .5s ease;
+
+        &:hover {
+          background-color: #eaf8fe;
+        }
+      }
+    }
+
+    .ant-btn-group {
+      display: inline-block;
+      margin: auto;
+    }
+
+    hr {
+      border-top: solid 1px #e9e9e9;
+      margin-bottom: 2px;
+    }
+  }
+
+  .td-icon-picker-content-hidden {
+    display: none;
+  }
+  
+}

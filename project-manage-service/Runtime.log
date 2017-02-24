@@ -1,0 +1,8 @@
+2017-02-21 14:56:01 > 
+                DELETE FROM man_auth_user
+                WHERE USER_ID='None';
+                 
+2017-02-21 14:56:41 > 
+                DELETE FROM man_pro_info
+                WHERE PRO_ID='20170221870E76E9F10B470B';
+                 

@@ -1,0 +1,14 @@
+[
+    {"key": "userCenter", "text": "用户中心", "to": "", "icon": "user", "children": [
+        {"key": "userAdd", "text": "添加用户", "to": "main/user/add"},
+        {"key": "userManage", "text": "用户管理", "to": "main/user/manage"},
+        {"key": "Demo04", "text": "DEMO04", "to": "main/demo/04"}
+    ]},
+    {"key": "auth", "text": "组员", "to": "", "icon": "user", "children": [
+        {"key": "userManag", "text": "用户管理1", "to": "main/auth/userManage"},
+        {"key": "roleManage", "text": "角色管理", "to": "main/auth/roleManage"},
+        {"key": "orgManage", "text": "机构管理", "to": "main/auth/orgManage"},
+        {"key": "menuManage", "text": "菜单管理", "to": "main/auth/menuManage"}
+    ]}
+    
+]

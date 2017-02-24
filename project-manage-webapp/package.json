@@ -1,0 +1,57 @@
+{
+  "name": "webapp",
+  "version": "1.0.0",
+  "private": true,
+  "entry": {
+    "index": "./src/entry/index.jsx"
+  },
+  "dependencies": {
+    "antd": "1.11.x",
+    "atool-build": "0.6.x",
+    "babel-core": "^6.7.6",
+    "babel-plugin-antd": "0.3.x",
+    "babel-polyfill": "^6.7.4",
+    "babel-runtime": "^6.6.1",
+    "classnames": "^2.2.5",
+    "crypto-js": "^3.1.6",
+    "echarts": "3.1.9",
+    "es3ify-loader": "^0.1.0",
+    "express": "^4.13.4",
+    "history": "^2.0.2",
+    "less": "^2.6.1",
+    "rc-animate": "^2.0.4",
+    "rc-queue-anim": "^0.11.9",
+    "rc-tween-one": "^0.6.20",
+    "react": "0.14.x",
+    "react-dom": "0.14.x",
+    "react-redux": "4.4.5",
+    "react-router": "2.2.4",
+    "redux": "3.4.0",
+    "redux-logger": "2.6.1",
+    "redux-thunk": "2.0.1",
+    "webpack": "^1.13.0",
+    "zrender": "^3.0.9"
+  },
+  "devDependencies": {
+    "dora": "0.3.x",
+    "dora-plugin-webpack": "0.6.x",
+    "dora-plugin-hmr": "0.5.x",
+    "dora-plugin-livereload": "0.3.x",
+    "dora-plugin-proxy": "0.6.x",
+    "eslint": "2.x",
+    "eslint-config-airbnb": "6.x",
+    "eslint-plugin-react": "4.x",
+    "pre-commit": "1.x",
+    "babel-eslint": "^6.0.0"
+  },
+  "pre-commit": [
+    "lint"
+  ],
+  "scripts": {
+    "start": "npm run dev",
+    "dev": "dora -p 8001 --plugins webpack,hmr,proxy,livereload?enableJs=false",
+    "prd": "node app",
+    "lint": "eslint --ext .js,.jsx src",
+    "build": "atool-build -o ./dist/prd/v1.0.0"
+  }
+}

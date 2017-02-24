@@ -1,0 +1,42 @@
+﻿功能模块开发规范：
+
+结构规范：
+01. 除个别功能模块外(如：App、Main、Login等)，其他模块不允许单独写样式，统一在App.less中编写
+02. 除个别特殊模块组件外(如：App、Main、Login等)，其他模块需统一目录格式
+    例如：用户模块下的用户管理功能
+    目录结构建议为（注意大小写）：
+    user/manage/UserManage.jsx
+    若要拆分模块，子模块命名需规范，如将UserManage模块组件拆分为表单和表格两个子组件，则命名应为：
+    UserManageForm.jsx 及 UserManageTable.jsx
+03. 除个别特定模块外，其他模块暂时不要使用redux操作状态
+04. class上使用注释标明作者，创建时间，修改人，修改时间
+    /**
+    * Auth: xxx Time: xxx
+    * Updater1: xxx Time: xxx
+    * Updater2: xxx Time: xxx
+    */
+05. 所有页面均需要通过IE8测试
+06. 推荐统一使用编辑器Visual Studio Code
+
+命名规范：
+01. 组件中变量名以及方法名必须使用驼峰式，且首字母小写
+02. 事件相关方法必须以handle开头，组成为：handle+组件名+操作，如：handleModelVisible，即为控制模态框显示
+03. 状态名的命名规则为：业务名(可选)+组件名+指定状态，如：detailModelVisible，即为 详细信息模态框 显示状态
+
+代码规范：
+00. 统一使用es6风格编码
+01. 统一使用"const obj = this"
+01. 判断相等必须使用===
+02. 不允许使用var，统一使用let或const
+03. 不允许出现href="#"，使用href="javascript:void(0)"代替
+04. 回调方法尽量在参数中写匿名函数，如：doRequest((x) => {...})
+05. setState后的代码必须在回调中，即：this.setState({}, () => {...})
+06. 复杂模块中方法名和变量名尽量写注释
+07. 代码中import的模块必须在代码中使用，未使用的import应删除
+08. 代码使用tab缩进，不要直接使用空格
+09. 引号统一使用双引号，不要使用单引号
+10. less代码需以less风格编写，不允许以css风格编写
+
+
+
+

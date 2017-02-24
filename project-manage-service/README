@@ -1,0 +1,21 @@
+
+# 安装依赖
+
+pip3 install tornado
+pip3 install python-jose
+pip3 install pymysql
+
+# 文件目录结构
+
+webserver/
+    application/    # 项目启动设置
+    dbservers/      # 数据库扩展支持
+    handlers/       # 接收请求并处理
+    routers/        # 转发路由设置
+    utils/          # 自定义相关配置
+    server.py       # 项目入口
+
+
+# 启动项目
+
+python3 server --port=8000

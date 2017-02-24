@@ -1,0 +1,56 @@
+2017-02-22 17:00:17 > 
+                UPDATE man_pro_info SET 
+                    PRO_TYPE='1',
+                    PRO_USE='1',
+                    PRO_DES='测试项目描述11111111121323'
+                WHERE PRO_ID='20170101BF703BC814F05A0C';
+                 
+2017-02-22 17:01:29 > 
+                UPDATE man_pro_info SET 
+                    PRO_TYPE='1',
+                    PRO_USE='1',
+                    PRO_DES='测试项目描述11111111121323qwewqeqweqweqweqweqweqwewqewqewqeqweqweqwewqewqeqweeweqewewqeqq1231231231231231231232132131312312312311231231232131312131231232131232131231231231231231232131231231212121111111111'
+                WHERE PRO_ID='20170101BF703BC814F05A0C';
+                 
+2017-02-22 17:01:38 > 
+                UPDATE man_pro_info SET 
+                    PRO_TYPE='1',
+                    PRO_USE='1',
+                    PRO_DES='测试项目描述11111111121323qwewqeqweqweqweqweqweqwewqewqewqeqweqweqwewqewqeqweeweqewewqeqq'
+                WHERE PRO_ID='None';
+                 
+2017-02-22 17:01:41 > 
+                UPDATE man_pro_info SET 
+                    PRO_TYPE='1',
+                    PRO_USE='1',
+                    PRO_DES='测试项目描述11111111121323qwewqeqweqweqweqweqweqwewqewqew'
+                WHERE PRO_ID='None';
+                 
+2017-02-22 17:01:45 > 
+                UPDATE man_pro_info SET 
+                    PRO_TYPE='1',
+                    PRO_USE='1',
+                    PRO_DES='测试项目描述1111111112132ffff'
+                WHERE PRO_ID='None';
+                 
+2017-02-22 17:02:36 > 
+                UPDATE man_pro_info SET 
+                    PRO_TYPE='1',
+                    PRO_USE='1',
+                    PRO_DES='测试项目描述11111111121323123'
+                WHERE PRO_ID='20170101BF703BC814F05A0C';
+                 
+2017-02-22 17:03:24 > 
+                UPDATE man_pro_info SET 
+                    PRO_TYPE='1',
+                    PRO_USE='1',
+                    PRO_DES='测试项目描述11111111121323123asdasdasdasdasdadasdasdasdasdasd'
+                WHERE PRO_ID='20170101BF703BC814F05A0C';
+                 
+2017-02-22 17:03:48 > 
+                UPDATE man_pro_info SET 
+                    PRO_TYPE='1',
+                    PRO_USE='1',
+                    PRO_DES='测试项目描述测试项目描述测试项目描述测试项目描述测试项目描述测试项目描述测试项目描述测试项目描述测试项目描述测试项目描述测试项目描述测试项目描述测试项目描述测试项目描述测试项目描述'
+                WHERE PRO_ID='20170101BF703BC814F05A0C';
+                 

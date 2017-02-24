@@ -1,0 +1,118 @@
+@baseBorder: solid 1px #e9e9e9;
+
+.td-page-table {
+    border-radius: 6px;
+    
+    .ant-checkbox-wrapper {
+        margin-bottom: 0px;
+    }
+
+    .td-page-table-toolbar {
+        background: #f7f7f7 none repeat scroll 0 0;
+        border-bottom: @baseBorder;
+        padding: 5px 4px;
+        
+        .ant-btn {
+            border: 0;
+            padding: 4px 8px;
+        }
+        
+        .ant-divider {
+            margin: 0 6px;
+        }
+    }
+    
+    .ant-table {
+        table {
+            border: 0;
+            
+            th {
+                border-bottom: @baseBorder;
+            }
+        }
+        td {
+            border: solid #e9e9e9;
+            border-width:0px 1px 1px 0px;
+        }
+        
+        .ant-table-footer {
+            top: 0px;
+            border: 0;
+            border-radius: 0;
+            padding: 12px 8px;
+            min-height: 36px;
+        }
+
+        .ant-table-fixed-right {
+            right: 0;
+            box-shadow: -1px 0 6px rgba(100, 100, 100, 0.2);
+        }
+    }
+    
+    .ant-table-empty {
+        margin-bottom: 0px;
+    }
+    
+    .ant-table-placeholder {
+        border-bottom: 0;
+    }
+    
+    .ant-pagination {
+        margin: 12px 8px;
+    }
+}
+
+.td-page-table-noradius {
+    .ant-table {
+        border-radius: 0 0 0 0;
+        table {
+            border-radius: 0 0 0 0;
+        }
+    }
+}
+
+.td-page-table-bordered {
+    border: @baseBorder;
+    
+    .clearfix {
+        >div {
+            // border-top: @baseBorder;
+            // border-left: @baseBorder;
+            // border-right: @baseBorder;
+            // border-bottom: @baseBorder;
+        }
+    }
+    
+    .ant-table-empty {
+        >div {
+            border-bottom: 0;
+        }
+    }
+
+    .ant-table-bordered {
+        border: 0px none;
+        .ant-table-body > table {
+            border: 0px none;
+        }
+        .ant-table-footer {
+            border-top: @baseBorder;
+        }
+    }
+}
+
+.td-page-table-nopage {
+    .clearfix {
+        >div {
+            border-bottom: 0;
+        }
+    }
+}
+
+.ant-table-thead{
+    tr {
+        th {
+            border: solid #e9e9e9;
+            border-width: 0px 1px 1px 0px;
+        }
+    }
+}

@@ -1,0 +1,46 @@
+[
+  {
+    "name": "方向性图标",
+    "icons": [
+      ["step-backward", "step-forward", "fast-backward", "fast-forward", "shrink", "arrow-salt", "up", "down"],
+      ["left", "right", "caret-up", "caret-down", "caret-left", "caret-right", "caret-circle-left", "caret-circle-right"], 
+      ["caret-circle-o-left", "caret-circle-o-right", "circle-left", "circle-right", "circle-o-left", "circle-o-right", "double-left", "double-right"],
+      ["verticle-left", "verticle-right", "backward", "forward", "rollback", "enter", "retweet", "swap"],
+      ["swap-left", "swap-right", "arrow-left", "arrow-right", "arrow-up", "arrow-down", "play-circle", "play-circle-o"],
+      ["circle-up", "circle-down", "circle-o-up", "circle-o-down", "caret-circle-up", "caret-circle-down",  "caret-circle-o-up", "caret-circle-o-down"]
+    ]
+  },
+  {
+    "name": "建议性图标",
+    "icons": [
+      ["question", "question-circle", "question-circle-o", "plus", "plus-circle", "plus-circle-o", "pause", "pause-circle"],
+      ["pause-circle-o", "minus", "minus-circle", "minus-circle-o", "plus-square", "minus-square", "info", "info-circle"],
+      ["info-circle-o", "exclamation", "exclamation-circle", "exclamation-circle-o", "cross", "cross-circle", "cross-circle-o", "check"],
+      ["check-circle", "check-circle-o", "clock-circle", "clock-circle-o"]
+    ]
+  },
+  {
+    "name": "通用图标1",
+    "icons": [
+      ["ie", "chrome", "windows", "laptop", "android", "apple", "appstore-o", "appstore"],
+      ["smile", "smile-circle", "meh", "meh-circle", "frown", "frown-circle", "aliwangwang", "aliwangwang-o"],
+      ["tag", "tag-o", "tags", "tags-o", "star", "star-o", "environment", "environment-o"],
+      ["cloud", "cloud-o", "cloud-upload", "cloud-upload-o", "cloud-download", "cloud-download-o", "eye", "eye-o"],
+      ["camera", "camera-o", "pay-circle", "pay-circle-o", "pushpin", "pushpin-o", "heart", "heart-o"],
+      ["lock", "unlock", "like", "dislike", "area-chart", "pie-chart", "line-chart", "bar-chart"]
+    ]
+  },
+  {
+    "name": "通用图标2",
+    "icons": [
+      ["bars", "github", "inbox", "shopping-cart", "book", "message", "team", "tablet"],
+      ["search", "share-alt", "setting", "picture", "phone", "notification", "mobile", "mail"],
+      ["code", "exception", "customerservice", "link", "paper-clip", "logout", "poweroff", "video-camera"],
+      ["user", "home", "hdd", "desktop", "folder", "folder-open", "menu-fold", "menu-unfold"],
+      ["filter", "file-text", "file", "file-unknown", "file-excel", "file-pdf", "file-jpg", "file-ppt"],
+      ["copy", "save", "edit", "delete", "to-top", "upload", "download", "export"],
+      ["qrcode", "scan", "credit-card", "calendar", "calculator", "solution", "ellipsis", "reload"],
+      ["loading"]
+    ]
+  }
+]

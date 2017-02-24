@@ -1,0 +1,107 @@
+// 分辨率高于1440px采用此配置
+@headHeight: 72px;
+@logoTop: 18px;
+@formTop: 200px;
+
+// 分辨率低于1440px采用此配置
+@headHeightLow: 64px;
+@logoTopLow: 14px;
+@formTopLow: 160px;
+
+.td-login {
+  width: 100%;
+  height: 100%;
+  padding-top: @formTop;
+  background-image: url(../app/image/login-bg.png);
+  background-size: cover;
+  overflow-y: auto;
+  
+  header {
+    position: fixed;
+    width: 100%;
+    height: @headHeight;
+    top: 0px;
+    background-color: #000;
+    opacity: 0.6;
+    -moz-opacity: 0.6;
+  }
+  .td-login-header {
+    position: fixed;
+    width: 100%;
+    height: @headHeight;
+    line-height: @headHeight;
+    top: 0px;
+    padding: 0px 96px;
+    .td-login-header-logo {
+      display: inline-block;
+      width: 140px;
+      height: 40px;
+      margin-top: @logoTop;
+      background-image: url(../app/image/mylogo.png);
+      background-repeat: no-repeat;
+    }
+    ul {
+      float: right;
+      li {
+        float: left;
+        list-style: none;
+        a {
+          color: #fff;
+          font-size: 16px;
+          margin-left: 24px;
+          -webkit-transition: all .5s ease;
+          transition: all .5s ease;
+          &:hover {
+            color: #2db7f5;
+          }
+        }
+      }
+    }
+  }
+
+  .td-login-form-warp {
+    position: relative;
+    margin: auto;
+    width: 300px;
+    height: 300px;
+    border-radius: 150px;
+    background-color: #000;
+    opacity: 0.6;
+    -moz-opacity: 0.6;
+    filter: alpha(opacity=60);
+    z-index: 1;
+  }
+  .td-login-form {
+    position: relative;
+    margin: auto;
+    margin-top: -250px;
+    width: 200px;
+    z-index: 2;
+    h1 {
+      color: #fff;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+    .ant-btn-primary {
+      width: 100%;
+    }
+  }
+}
+
+@media (max-width: 1440px) {
+  .td-login {
+    padding-top: @formTopLow;
+
+    header {
+      height: @headHeightLow;
+    }
+
+    .td-login-header{
+      height: @headHeightLow;
+      line-height: @headHeightLow;
+      .td-login-header-logo {
+        margin-top: @logoTopLow;
+      }
+    }
+  }
+}

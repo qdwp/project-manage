@@ -1,0 +1,13 @@
+[
+    {"key": "userCenter", "text": "用户中心", "to": "", "icon": "user", "children": [
+        {"key": "userManage", "text": "用户管理", "to": "main/user/manage", "icon": "user"},
+        {"key": "userPwd", "text": "密码修改", "to": "main/user/password", "icon": "user"}
+    ]},
+    {"key": "auth", "text": "组长", "to": "", "icon": "user", "children": [
+        {"key": "userManag", "text": "项目管理", "to": "main/project/manage", "icon": "book"},
+        {"key": "roleManage", "text": "角色管理", "to": "main/auth/roleManage"},
+        {"key": "orgManage", "text": "机构管理", "to": "main/auth/orgManage"},
+        {"key": "menuManage", "text": "菜单管理", "to": "main/auth/menuManage"}
+    ]}
+    
+]
