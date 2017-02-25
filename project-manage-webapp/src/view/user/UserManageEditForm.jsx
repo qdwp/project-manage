@@ -9,7 +9,6 @@ class UserManageEditForm extends React.Component {
   constructor(props) {
     super(props);
     const info = getLoginInfo();
-    console.log(info);
     this.state = ({
       valid: false,
       userAuth: info.userAuth,
@@ -109,7 +108,18 @@ class UserManageEditForm extends React.Component {
               </Select>
             </FormItem>
           </Col>
-        </Row> : null}
+        </Row>
+        :
+        <div hidden>
+          <Row>
+            <Col sm={24} md={24}>
+              <FormItem >
+                <Input {...getFieldProps('userAuth', { initialValue: '2' })} />
+              </FormItem>
+            </Col>
+          </Row>
+        </div>
+        }
         <Row>
           <Col sm={24} md={24}>
             <FormItem label="初始状态" {...formItemLayout}>

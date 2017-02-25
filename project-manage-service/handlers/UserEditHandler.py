@@ -39,7 +39,7 @@ class UserEditHandler(BaseHandler):
             if case(): # Default
                 self.write_error(404)
                 return
-        self.write(rsp)
+        self.write(rsp.toDict())
         return
 
     def add(self):
@@ -51,7 +51,7 @@ class UserEditHandler(BaseHandler):
         userName = self.get_argument('userName', None)
         userAuth = self.get_argument('userAuth', None)
         userLogin = self.get_argument('userLogin', None)
-        userCreator = self.get_argument('userCreator', None)
+        userCreator = self.get_current_user()['userId'] or None
         rsp = RspInfo()
         try:
             dao = UserDao()
@@ -70,7 +70,7 @@ class UserEditHandler(BaseHandler):
             rsp.setInfo("添加用户失败")
         finally:
             del(dao)
-        return rsp.toDict()
+        return rsp
 
     def update(self):
         """
@@ -94,7 +94,7 @@ class UserEditHandler(BaseHandler):
             rsp.setInfo("修改用户失败")
         finally:
             del(dao)
-        return rsp.toDict()
+        return rsp
 
     def delete(self):
         """
@@ -115,7 +115,7 @@ class UserEditHandler(BaseHandler):
             rsp.setInfo("删除用户失败")
         finally:
             del(dao)
-        return rsp.toDict()
+        return rsp
 
     def reset(self):
         """
@@ -136,4 +136,4 @@ class UserEditHandler(BaseHandler):
             rsp.setInfo("重置用户密码失败")
         finally:
             del(dao)
-        return rsp.toDict()
+        return rsp

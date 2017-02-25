@@ -10,10 +10,10 @@ import ProjectMemberAppendSearch from './ProjectMemberAppendSearch';
 class ProjectMemberAppend extends React.Component {
   constructor(props) {
     super(props);
-    const info = getLoginInfo();
     this.state = {
       tdTableReload: false,
-      tdTableParam: { userCreator: info.userId },
+      tdTableParam: { userCreator: getLoginInfo().userId },
+      formReset: false,
       project: '',
       call: false,
       tableSelectedRows: [],
@@ -23,9 +23,18 @@ class ProjectMemberAppend extends React.Component {
     };
   }
 
+  componentWillMount() {
+    const { project } = this.props;
+    this.setState({
+      tdTableParam: { userCreator: getLoginInfo().userId, proId: project },
+    });
+  }
+
   // 父页面通过修改props 中属性的值触发该方法
   componentWillReceiveProps(nextProps) {
-    console.log('project', nextProps.project);
+    this.setState({
+      tdTableParam: { userCreator: getLoginInfo().userId, proId: nextProps.project },
+    });
     // 更新表单数据
     if (nextProps.call === true && this.state.call === false) {
       this.setState({
@@ -39,10 +48,19 @@ class ProjectMemberAppend extends React.Component {
         });
       });
     }
+    // 重置表单
+    if (nextProps.formReset === true) {
+      this.setState({
+        formReset: true,
+      }, () => {
+        this.setState({
+          formReset: false,
+        });
+      });
+    }
   }
 
   handleFormSubmit(data) {
-    console.log(data);
     this.setState({
       tdTableReload: true,
       tdTableParam: Object.assign({}, this.state.tdTableParam, data),
@@ -56,6 +74,7 @@ class ProjectMemberAppend extends React.Component {
 
   handleFormReset() {
     this.setState({
+      tdTableParam: { userCreator: getLoginInfo().userId, proId: this.props.project },
       tableSelectedRows: [],
       tableSelectedRowKeys: [],
     });
@@ -69,7 +88,6 @@ class ProjectMemberAppend extends React.Component {
   }
 
   renderTableList(result) {
-    console.log(result);
     if (result.rspCode === rspInfo.RSP_SUCCESS) {
       return { list: result.rspData.list, total: result.rspData.total };
     }
@@ -97,6 +115,7 @@ class ProjectMemberAppend extends React.Component {
     return (
       <div>
         <ProjectMemberAppendSearch
+          formReset={this.state.formReset}
           onSubmit={this.handleFormSubmit.bind(this)}
           onReset={this.handleFormReset.bind(this)}
         />
@@ -104,7 +123,7 @@ class ProjectMemberAppend extends React.Component {
 
         <TdPageTable rowKey={record => record.USER_ID}
           rowSelectCallback={this.handlerRowSelect.bind(this)}
-          url={url.user.list}
+          url={url.project.userList}
           loadParam={this.state.tdTableParam}
           reload={this.state.tdTableReload}
           renderResult={this.renderTableList.bind(this)}

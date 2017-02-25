@@ -27,10 +27,11 @@ class UserDao(object):
                     ' AND USER_Name like "%{}%"'.format(userName) if userName else '',
                     ' AND USER_AUTH = "{}"'.format(userAuth) if userAuth else '',
                     ' AND USER_LOGIN = "{}"'.format(userLogin) if userLogin else '',
-                    ' AND USER_CREATOR = "{}"'.format(userCreator) if userCreator else '',
+                    ' AND USER_CREATOR = "{}"'.format(userCreator) if userCreator and userCreator != 'admin' else '',
                     start=start,
                     size=size
                     )
+            Utils.log('查询数据库用户列表SQL', sql)
             list = PySQL.get(sql)
             # sqlTotal = """
             #     SELECT 1 FROM man_auth_user
@@ -64,7 +65,7 @@ class UserDao(object):
         except Exception as e:
             print('ERROR {}'.format(e))
             Utils.log('ERROR {}'.format(e))
-        return count == 1
+        return count > 0
 
     def insert(self, userId, userName, userAuth, userLogin, userCreator):
         """
@@ -84,11 +85,12 @@ class UserDao(object):
                     '{}','{}','{}','{}','{}','{}'
                 );
                 """.format(userId, userName, userAuth, userLogin, userCreator, Utils.getLocalTime())
+            Utils.log('添加用户记录SQL', sql)
             count = PySQL.execute(sql)
         except Exception as e:
             print('ERROR {}'.format(e))
             Utils.log('ERROR {}'.format(e))
-        return count == 1
+        return count > 0
 
     def update(self, userId, userName, userAuth, userLogin):
         """
@@ -108,7 +110,7 @@ class UserDao(object):
         except Exception as e:
             print('ERROR {}'.format(e))
             Utils.log('ERROR {}'.format(e))
-        return count == 1
+        return count > 0
 
     def delete(self, userId):
         """
@@ -125,7 +127,7 @@ class UserDao(object):
         except Exception as e:
             print('ERROR {}'.format(e))
             Utils.log('ERROR {}'.format(e))
-        return count == 1
+        return count > 0
 
     def reset(self, userId):
         """
@@ -139,7 +141,7 @@ class UserDao(object):
                 AND USER_PWD='96e79218965eb72c92a549dd5a330112';
                 """.format(userId)
             res = PySQL.execute(besql)
-            if res == 1:
+            if res > 0:
                 Utils.log('愿密码已为默认值')
                 return True
             sql = """
@@ -153,4 +155,4 @@ class UserDao(object):
         except Exception as e:
             print('ERROR {}'.format(e))
             Utils.log('ERROR {}'.format(e))
-        return count == 1
+        return count > 0

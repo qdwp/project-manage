@@ -44,7 +44,7 @@ class Login extends React.Component {
             setLocalToken(info.token);
             this.context.router.replace('/main');
           } else {
-            openNotice('error', result.rspMsg, '登录失败');
+            openNotice('error', result.rspInfo, '登录失败');
             this.setState({ loading: false });
           }
         });

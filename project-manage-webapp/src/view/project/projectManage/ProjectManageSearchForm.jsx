@@ -1,6 +1,9 @@
 import React from 'react';
 import { Row, Col, Form, Input, Button, Icon, Select } from 'antd';
-import { filterObject } from '../../../common/util';
+import { filterObject, callAjax } from '../../../common/util';
+import { rspInfo } from '../../../common/authConstant';
+import { url } from '../../../config/server';
+import TdSelect from '../../../component/TdSelect';
 
 const Option = Select.Option;
 
@@ -10,10 +13,30 @@ class ProjectManageSearchForm extends React.Component {
     this.state = {
       advSearchShow: false,
       formData: {},
+      proType: {},
     };
   }
 
+  componentDidMount() {
+    const obj = this;
+    const param = {};
+    const opt = {
+      url: url.project.typeList,
+      type: 'GET',
+      dataType: 'json',
+      data: param,
+    };
+    callAjax(opt, (result) => {
+      if (result.rspCode === rspInfo.RSP_SUCCESS) {
+        obj.setState({ proType: result.rspData.list });
+      }
+    }, () => {
+      //
+    });
+  }
+
   render() {
+    const obj = this;
     const FormItem = Form.Item;
     const { onSubmit, onReset } = this.props;
     const { getFieldProps } = this.props.form;
@@ -35,14 +58,13 @@ class ProjectManageSearchForm extends React.Component {
             </FormItem>
           </Col>
           <Col sm={12} md={6}>
-            <FormItem label='项目类型' {...formItemLayout}>
-              <Select {...getFieldProps('proType', { initialValue: '' }) } >
-                <Option value="">请选择</Option>
-                <Option value="1">项目类型1</Option>
-                <Option value="2">项目类型2</Option>
-                <Option value="3">项目类型3</Option>
-                <Option value="4">项目类型4</Option>
-              </Select>
+            <FormItem label="项目类型" {...formItemLayout}>
+              <TdSelect {...getFieldProps('proType', {
+                initialValue: '',
+              })}
+                dict={{ dict_value: 'TYPE_ID', dict_text: 'TYPE_TEXT' }}
+                data={obj.state.proType} blankText="请选择"
+              />
             </FormItem>
           </Col>
           <Col sm={12} md={6}>

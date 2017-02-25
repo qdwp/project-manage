@@ -29,8 +29,9 @@ class ProjectListHandler(BaseHandler):
         proName = self.get_argument('proName', None)
         proType = self.get_argument('proType', None)
         proUse = self.get_argument('proUse', None)
+        userCreator = self.get_current_user()['userId'] or None
         dao = ProjectDao()
-        list, total = dao.getList(page, size, proId, proName, proType, proUse)
+        list, total = dao.getList(page, size, proId, proName, proType, proUse, userCreator)
         rsp.setSuccess()
         rsp.setData(list, total)
         self.write(rsp.toDict())

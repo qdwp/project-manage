@@ -274,7 +274,7 @@ export function refreshLoginInfo(tk, asyn) {
             setTimeout(() => { location.reload(); }, 3000);
           }
         } else if (result.rspCode === rspInfo.RSP_OTHER) {
-          openNotice('warning', result.rspMsg);
+          openNotice('warning', result.rspInfo);
           setTimeout(() => {
             if (document.getElementById('hiddenLogoutBtn')) {
               document.getElementById('hiddenLogoutBtn').click();
@@ -283,7 +283,7 @@ export function refreshLoginInfo(tk, asyn) {
             }
           }, 3200);
         } else {
-          openNotice('warning', result.rspMsg);
+          openNotice('warning', result.rspInfo);
         }
       },
       error: () => {
@@ -295,9 +295,9 @@ export function refreshLoginInfo(tk, asyn) {
 
 // inner function
 function doNormalRequest(type, opt, data, dataType, contentType, asyn, successCallback, errorCallback) {
-  const tk = data.token ? data.token : null;
-  const arr = opt.url.split('/');
-  const name = arr[arr.length - 1].split('.')[0];
+  // const tk = data.token ? data.token : null;
+  // const arr = opt.url.split('/');
+  // const name = arr[arr.length - 1].split('.')[0];
   data.token = getLoginInfo().token;
   window.$.support.cors = true;  // IE8下cors跨域访问
   window.$.ajax({
@@ -316,7 +316,7 @@ function doNormalRequest(type, opt, data, dataType, contentType, asyn, successCa
       const cod = result.rspCod;
       // validResSign(cod + result.rspHash, null, result.rspAuth, cod === '_SSO_ERR' ? null : tk);
       if (cod === rspInfo.RSP_OTHER) {
-        openNotice('error', result.rspMsg);
+        openNotice('error', result.rspInfo);
         setTimeout(() => {
           document.getElementById('hiddenLogoutBtn').click();
         }, 3200);

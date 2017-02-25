@@ -60,7 +60,6 @@ class Main extends React.Component {
 
   onToggle(item) {
     // 调用action中的动作修改组件状态
-    console.log('onToggle', item);
     const { dispatch } = this.props;
     dispatch(toggleMenuAction(item));
   }
@@ -95,7 +94,6 @@ class Main extends React.Component {
   // 该方法在vdom中使用bind重新设置this指向Main组件
   handleMenuClick(item) {
     // 调用action中的动作修改组件状态
-    console.log('handleMenuClick', item);
     const { dispatch } = this.props;
     dispatch(clickMenuAction(item));
   }

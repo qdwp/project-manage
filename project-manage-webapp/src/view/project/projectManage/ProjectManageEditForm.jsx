@@ -1,6 +1,9 @@
 import React from 'react';
 import { Form, Row, Col, Input, Select } from 'antd';
-import { getLoginInfo } from '../../../common/util';
+import { getLoginInfo, callAjax } from '../../../common/util';
+import { url } from '../../../config/server';
+import { rspInfo } from '../../../common/authConstant';
+import TdSelect from '../../../component/TdSelect';
 
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -9,10 +12,28 @@ class ProjectManageEditForm extends React.Component {
   constructor(props) {
     super(props);
     const info = getLoginInfo();
-    console.log(info);
     this.state = ({
       valid: false,
       userAuth: info.userAuth,
+      proType: {},
+    });
+  }
+
+  componentDidMount() {
+    const obj = this;
+    const param = {};
+    const opt = {
+      url: url.project.typeList,
+      type: 'GET',
+      dataType: 'json',
+      data: param,
+    };
+    callAjax(opt, (result) => {
+      if (result.rspCode === rspInfo.RSP_SUCCESS) {
+        obj.setState({ proType: result.rspData.list });
+      }
+    }, () => {
+      //
     });
   }
 
@@ -35,7 +56,7 @@ class ProjectManageEditForm extends React.Component {
 
   // 子页面表单校验
   validForm() {
-    console.log('=====进入validForm');
+    // console.log('=====进入validForm');
     const { editType, validCallback } = this.props;
 
     this.props.form.validateFields((errors, data) => {
@@ -46,6 +67,7 @@ class ProjectManageEditForm extends React.Component {
   }
 
   render() {
+    const obj = this;
     const { formData, editType } = this.props;
     const { getFieldProps } = this.props.form;
     const formItemLayout = {
@@ -82,20 +104,10 @@ class ProjectManageEditForm extends React.Component {
         <Row>
           <Col sm={24} md={24}>
             <FormItem label="项目类型" {...formItemLayout}>
-              <Select placeholder="请选择项目类型" {...getFieldProps('proType', {
-                initialValue: formData.PRO_TYPE !== undefined ? `${formData.PRO_TYPE}` : '2',
-                validate: [{
-                  rules: [
-                    { required: true, message: '请选择项目类型', whitespace: true },
-                  ],
-                  trigger: 'onBlur',
-                }],
-                validateFirst: true,
-              })}
-              >
-                <Option value="1">项目组长</Option>
-                <Option value="2">项目成员</Option>
-              </Select>
+              <TdSelect {...getFieldProps('proType', { initialValue: '' })}
+                dict={{ dict_value: 'TYPE_ID', dict_text: 'TYPE_TEXT' }}
+                data={obj.state.proType} blankText="请选择"
+              />
             </FormItem>
           </Col>
         </Row>

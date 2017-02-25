@@ -5,12 +5,13 @@ import TdCard from '../../../component/TdCard';
 import { openNotice, buildTableTip } from '../../../common/antdUtil';
 import { url } from '../../../config/server';
 import { rspInfo } from '../../../common/authConstant';
-import { callAjax, parseDate, getLoginInfo } from '../../../common/util';
+import { callAjax, getLoginInfo } from '../../../common/util';
 import { filterObject } from '../../../common/util';
 import TdPageTable from '../../../component/TdPageTable';
 import ProjectManageSearchForm from './ProjectManageSearchForm';
 import ProjectManageEditForm from './ProjectManageEditForm';
 import ProjectMemberAppend from './ProjectMemberAppend';
+import ProjectMemberInfo from './ProjectMemberInfo';
 const confirm = Modal.confirm;
 
 class ProjectManage extends React.Component {
@@ -29,7 +30,10 @@ class ProjectManage extends React.Component {
       tableLoading: false,
       editType: '1',
       appendVisible: false,
+      infoVisible: false,
       project: '',
+      proName: '',
+      projectName: '',
       call: false,
     };
   }
@@ -141,7 +145,7 @@ class ProjectManage extends React.Component {
                 });
               });
             } else {
-              openNotice('error', result.rspMsg, '删除项目记录失败');
+              openNotice('error', result.rspInfo, '提示');
             }
           }, (rep, info, o) => {
             openNotice('error', rspInfo.RSP_NETWORK_ERROR, '提示');
@@ -185,7 +189,7 @@ class ProjectManage extends React.Component {
   //               });
   //             });
   //           } else {
-  //             openNotice('error', result.rspMsg, '重置密码失败');
+  //             openNotice('error', result.rspInfo, '提示');
   //           }
   //         }, (rep, info, opt) => {
   //           openNotice('error', rspInfo.RSP_NETWORK_ERROR, '提示');
@@ -269,7 +273,7 @@ class ProjectManage extends React.Component {
           });
         });
       } else {
-        openNotice('error', result.rspMsg, '添加项目失败');
+        openNotice('error', result.rspInfo, '添加项目失败');
         obj.setState({
           confirmLoading: false,
         });
@@ -309,7 +313,7 @@ class ProjectManage extends React.Component {
           });
         });
       } else {
-        openNotice('error', result.rspMsg, '修改项目失败');
+        openNotice('error', result.rspInfo, '提示');
         obj.setState({
           confirmLoading: false,
         });
@@ -328,63 +332,89 @@ class ProjectManage extends React.Component {
     this.setState({
       call: true,
       project: record.PRO_ID,
-      appendVisible: !this.state.appendVisible,
+      proName: record.PRO_NAME,
+      infoVisible: !this.state.infoVisible,
     }, () => {
-      this.setState({ call: false });
+      this.setState({
+        call: false,
+        formReset: true,
+      }, () => {
+        // 将子组件表单重置标识置为false
+        this.setState({
+          formReset: false,
+        });
+      });
     });
   }
 
   handleAppendLinkClick(text, record, key) {
     console.log(record, key);
+    if (record.PRO_USE === '0') {
+      openNotice('warning', '请先启用项目', '提示');
+      return;
+    }
     this.setState({
       call: true,
       project: record.PRO_ID,
+      projectName: record.PRO_NAME,
       appendVisible: !this.state.appendVisible,
     }, () => {
-      this.setState({ call: false });
+      this.setState({
+        call: false,
+        formReset: true,
+      }, () => {
+        // 将子组件表单重置标识置为false
+        this.setState({
+          formReset: false,
+        });
+      });
     });
   }
 
   // 将选中的成员用户添加到指定项目
   appendOk(keys, rows) {
     console.log(keys, rows);
-    // console.log(this.state.project);
-    this.setState({ appendVisible: false });
-    // const opt = {
-    //   url: url.project.update,
-    //   data: formData,
-    // };
-    // const obj = this;
-    // callAjax(opt, (result) => {
-    //   console.log(result);
-    //   if (result.rspCode === rspInfo.RSP_SUCCESS) {
-    //     openNotice('success', '更新项目信息成功', '提示');
-    //     // obj.props.form.resetFields();
-    //     obj.setState({
-    //       confirmLoading: false,
-    //       modalVisible: !obj.state.modalVisible,
-    //       modalOprType: 0,
-    //       tdTableReload: true,
-    //       tableSelectedRowKeys: [],
-    //       tableSelectedRows: [],
-    //     }, () => {
-    //       obj.setState({
-    //         tdTableReload: false,
-    //       });
-    //     });
-    //   } else {
-    //     openNotice('error', result.rspMsg, '修改项目失败');
-    //     obj.setState({
-    //       confirmLoading: false,
-    //     });
-    //   }
-    // }, (req, info, o) => {
-    //   console.log(req, info, o);
-    //   openNotice('error', rspInfo.RSP_NETWORK_ERROR, '提示');
-    //   obj.setState({
-    //     confirmLoading: false,
-    //   });
-    // });
+    console.log(this.state.project);
+    if (keys.length > 0) {
+      const value = {
+        proId: this.state.project,
+        proName: this.state.projectName,
+        userCreator: getLoginInfo().userId,
+        users: [],
+      };
+      console.log(value);
+      let user = '[';
+      for (let i = 0; i < rows.length; i++) {
+        user += `{"userId":"${rows[i].USER_ID}","userName":"${rows[i].USER_NAME}"}`;
+        if (i < rows.length - 1) {
+          user += ',';
+        }
+      }
+      user += ']';
+      value.users = user;
+      const opt = {
+        url: url.project.userAppend,
+        data: value,
+      };
+      const obj = this;
+      callAjax(opt, (result) => {
+        console.log(result);
+        if (result.rspCode === rspInfo.RSP_SUCCESS) {
+          openNotice('success', '添加项目成员成功', '提示');
+          // obj.props.form.resetFields();
+          obj.setState({
+            appendVisible: false,
+          });
+        } else {
+          openNotice('error', result.rspInfo, '提示');
+        }
+      }, (req, info, o) => {
+        console.log(req, info, o);
+        openNotice('error', rspInfo.RSP_NETWORK_ERROR, '提示');
+      });
+    } else {
+      openNotice('warning', '请选择要添加的纪录', '提示');
+    }
   }
 
   appendNo() {
@@ -419,7 +449,7 @@ class ProjectManage extends React.Component {
       { title: '项目组长', dataIndex: 'PRO_LEADER', width: 120, render: (text) => buildTableTip(text, 120) },
       { title: '创建时间', dataIndex: 'PRO_CRE_TIME', width: 180, render: (text) => buildTableTip(text, 180) },
       {
-        title: '成员', key: 'operationq', width: 120, fixed: 'right', render(text, record, key) {
+        title: '成员', key: 'operation', width: 120, fixed: 'right', render(text, record, key) {
           return (
             <span>
               <a href='javascript:void(0)' onClick={() => { obj.handleDetailLinkClick(text, record, key); } }>成员</a>
@@ -482,9 +512,19 @@ class ProjectManage extends React.Component {
             <ProjectMemberAppend
               call={this.state.call}
               project={this.state.project}
-              formData={this.state.formData}
+              formReset={this.state.formReset}
               onOk={this.appendOk.bind(this)}
               onNo={this.appendNo.bind(this)}
+            />
+          </Modal>
+          <Modal title={`${this.state.proName}-成员列表`} visible={this.state.infoVisible}
+            onCancel={() => { this.setState({ infoVisible: false, call: false }); } }
+            footer={null} width="800"
+          >
+            <ProjectMemberInfo
+              call={this.state.call}
+              project={this.state.project}
+              formReset={this.state.formReset}
             />
           </Modal>
         </TdCard>

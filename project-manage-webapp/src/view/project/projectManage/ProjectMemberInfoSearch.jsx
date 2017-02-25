@@ -3,7 +3,7 @@ import { Row, Col, Form, Input, Button, Icon } from 'antd';
 import { filterObject } from '../../../common/util';
 
 
-class ProjectMemberAppendSearch extends React.Component {
+class ProjectMemberInfoSearch extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -65,10 +65,10 @@ class ProjectMemberAppendSearch extends React.Component {
 }
 const noop = () => { };
 // 定义组件标签的可配置属性
-ProjectMemberAppendSearch.defaultProps = {
+ProjectMemberInfoSearch.defaultProps = {
   onSubmit: noop,
   onReset: noop,
 };
 
-ProjectMemberAppendSearch = Form.create()(ProjectMemberAppendSearch);
-export default ProjectMemberAppendSearch;
+ProjectMemberInfoSearch = Form.create()(ProjectMemberInfoSearch);
+export default ProjectMemberInfoSearch;

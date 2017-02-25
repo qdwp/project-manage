@@ -29,7 +29,7 @@ class UserListHandler(BaseHandler):
         userName = self.get_argument('userName', None)
         userAuth = self.get_argument('userAuth', None)
         userLogin = self.get_argument('userLogin', None)
-        userCreator = self.get_argument('userCreator', None)
+        userCreator = self.get_current_user()['userId'] or None
         dao = UserDao()
         list, total = dao.getList(page, size, userId, userName, userAuth, userLogin, userCreator)
         rsp.setSuccess()

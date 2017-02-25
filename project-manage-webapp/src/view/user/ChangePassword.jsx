@@ -26,7 +26,7 @@ class ChangePassword extends React.Component {
         this.setState({ valid: false });
       });
     }
-    console.log('formReset = ', nextProps.formReset);
+    // console.log('formReset = ', nextProps.formReset);
     // 重置表单
     if (nextProps.formReset === true) {
       console.log('child component form reset.');
@@ -91,7 +91,7 @@ class ChangePassword extends React.Component {
           window.location.href = '/#/login';
         }, 2000);
       } else {
-        openNotice('error', result.rspMsg, '提示');
+        openNotice('error', result.rspInfo, '提示');
         this.setState({
           confirmLoading: false,
         });

@@ -32,8 +32,6 @@ class UserManage extends React.Component {
   }
 
   handleFormSubmit(data) {
-    getLoginInfo();
-    console.log(data);
     this.setState({
       tdTableReload: true,
       tdTableParam: data,
@@ -57,7 +55,7 @@ class UserManage extends React.Component {
     this.setState({
       formData: {},
       modalVisible: true,
-      modalTitle: '添加项目成员',
+      modalTitle: '添加新用户',
       editType: '1',
     }, () => {
       // 重置子组件表单数据
@@ -81,7 +79,7 @@ class UserManage extends React.Component {
       this.setState({
         formData: this.state.tableSelectedRows[0],
         modalVisible: true,
-        modalTitle: '修改项目信息',
+        modalTitle: '修改用户信息',
         editType: '2',
       }, () => {
         // 重置子组件表单数据
@@ -94,7 +92,7 @@ class UserManage extends React.Component {
       });
     } else if (this.state.tableSelectedRows.length > 1) {
       openNotice('warning', '不能同时选择多条用户记录', '提示');
-      console.log('删除数据', this.state.tableSelectedRowKeys, this.state.tableSelectedRows);
+      // console.log('删除数据', this.state.tableSelectedRowKeys, this.state.tableSelectedRows);
     } else {
       openNotice('warning', '请选择要修改的用户记录', '提示');
     }
@@ -110,20 +108,18 @@ class UserManage extends React.Component {
   // 删除用户
   handlerDeleteBtnClick() {
     if (this.state.tableSelectedRows.length > 0) {
-      console.log('删除数据', this.state.tableSelectedRowKeys, this.state.tableSelectedRows);
+      // console.log('删除数据', this.state.tableSelectedRowKeys, this.state.tableSelectedRows);
       const userId = this.state.tableSelectedRowKeys[0];
       const obj = this;
       confirm({
         title: `您是否确认要删除用户 ${userId} ?`,
         content: '',
         onOk() {
-          console.log('onOk');
           const opt = {
             url: url.user.delete,
             type: 'POST',
             data: { userId },
           };
-          console.log(opt);
           callAjax(opt, (result) => {
             if (result.rspCode === rspInfo.RSP_SUCCESS) {
               openNotice('success', '删除用户成功', '提示');
@@ -138,7 +134,7 @@ class UserManage extends React.Component {
                 });
               });
             } else {
-              openNotice('error', result.rspMsg, '删除用户成功');
+              openNotice('error', result.rspInfo, '删除用户成功');
             }
           }, (rep, info, opt) => {
             openNotice('error', rspInfo.RSP_NETWORK_ERROR, '提示');
@@ -154,20 +150,18 @@ class UserManage extends React.Component {
   // 重置密码
   handleRestPwdLinkClick() {
     if (this.state.tableSelectedRows.length > 0) {
-      console.log('重置密码', this.state.tableSelectedRowKeys, this.state.tableSelectedRows);
+      // console.log('重置密码', this.state.tableSelectedRowKeys, this.state.tableSelectedRows);
       const userId = this.state.tableSelectedRowKeys[0];
       const obj = this;
       confirm({
         title: `您是否确认要重置用户 ${userId} 的密码 ?`,
         content: '',
         onOk() {
-          console.log('onOk');
           const opt = {
             url: url.user.reset,
             type: 'POST',
             data: { userId },
           };
-          console.log(opt);
           callAjax(opt, (result) => {
             if (result.rspCode === rspInfo.RSP_SUCCESS) {
               openNotice('success', '重置密码成功', '提示');
@@ -182,7 +176,7 @@ class UserManage extends React.Component {
                 });
               });
             } else {
-              openNotice('error', result.rspMsg, '重置密码成功');
+              openNotice('error', result.rspInfo, '重置密码成功');
             }
           }, (rep, info, opt) => {
             openNotice('error', rspInfo.RSP_NETWORK_ERROR, '提示');
@@ -220,7 +214,6 @@ class UserManage extends React.Component {
         formReset: false,
         confirmLoading: true,
       }, () => {
-        console.log(editType);
         switch (editType) {
           case '1':
             obj.handleAddModalOk();
@@ -266,7 +259,7 @@ class UserManage extends React.Component {
           });
         });
       } else {
-        openNotice('error', result.rspMsg, '添加用户失败');
+        openNotice('error', result.rspInfo, '提示');
         obj.setState({
           confirmLoading: false,
         });
@@ -289,7 +282,6 @@ class UserManage extends React.Component {
     };
     const obj = this;
     callAjax(opt, (result) => {
-      console.log(result);
       if (result.rspCode === rspInfo.RSP_SUCCESS) {
         openNotice('success', '更新用户信息成功', '提示');
         // obj.props.form.resetFields();
@@ -306,7 +298,7 @@ class UserManage extends React.Component {
           });
         });
       } else {
-        openNotice('error', result.rspMsg, '修改用户失败');
+        openNotice('error', result.rspInfo, '修改用户失败');
         obj.setState({
           confirmLoading: false,
         });
@@ -319,7 +311,6 @@ class UserManage extends React.Component {
     });
   }
   renderTableList(result) {
-    console.log(result);
     if (result.rspCode === rspInfo.RSP_SUCCESS) {
       return { list: result.rspData.list, total: result.rspData.total };
     }

@@ -17,5 +17,10 @@ export const url = {
     add: `${hostUrl}/project/record/add`,
     update: `${hostUrl}/project/record/update`,
     delete: `${hostUrl}/project/record/delete`,
+    userList: `${hostUrl}/project/user/list`,
+    userInfo: `${hostUrl}/project/user/info`,
+    userAppend: `${hostUrl}/project/user/append`,
+    userRemove: `${hostUrl}/project/user/remove`,
+    typeList: `${hostUrl}/project/type/list`,
   },
 };

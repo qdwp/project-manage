@@ -14,6 +14,7 @@ class BaseHandler(tornado.web.RequestHandler):
 
     def get_current_user(self):
         token = self.get_argument('token', None)
+        Utils.log(self.request.body)
         return Utils.getUserInfo(token)
 
     def write_error(self, status_code, **kwargs):

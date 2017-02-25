@@ -36,7 +36,7 @@ class ProRecordEditHandler(BaseHandler):
             if case(): # Default
                 self.write_error(404)
                 return
-        self.write(rsp)
+        self.write(rsp.toDict())
         return
 
     def add(self):
@@ -48,7 +48,7 @@ class ProRecordEditHandler(BaseHandler):
         proType = self.get_argument('proType', None)
         proUse = self.get_argument('proUse', None)
         proDes = self.get_argument('proDes', None)
-        userCreator = self.get_argument('userCreator', None)
+        userCreator = self.get_current_user()['userId'] or None
         rsp = RspInfo()
         try:
             dao = ProjectDao()
@@ -63,7 +63,7 @@ class ProRecordEditHandler(BaseHandler):
             rsp.setInfo("添加项目失败")
         finally:
             del(dao)
-        return rsp.toDict()
+        return rsp
 
     def update(self):
         """
@@ -88,7 +88,7 @@ class ProRecordEditHandler(BaseHandler):
             rsp.setInfo("修改用户失败")
         finally:
             del(dao)
-        return rsp.toDict()
+        return rsp
 
     def delete(self):
         """
@@ -99,8 +99,10 @@ class ProRecordEditHandler(BaseHandler):
         rsp = RspInfo()
         try:
             dao = ProjectDao()
-            res = dao.delete(proId)
-            if res:
+            if dao.valid(proId):
+                Utils.log('WARNING', '校验项目已分配成员或者模块')
+                rsp.setInfo('校验项目已分配成员或者模块, 无法删除')
+            elif dao.delete(proId):
                 rsp.setSuccess()
                 rsp.setInfo("删除用户成功")
         except Exception as e:
@@ -109,4 +111,4 @@ class ProRecordEditHandler(BaseHandler):
             rsp.setInfo("删除用户失败")
         finally:
             del(dao)
-        return rsp.toDict()
+        return rsp
