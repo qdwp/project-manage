@@ -15,7 +15,10 @@ class LoginDao(object):
         """
         try:
             sql = "SELECT * FROM man_auth_user WHERE USER_LOGIN='1' AND USER_ID='{0}' AND USER_PWD='{1}';".format(id, pwd)
-            return PySQL.select(sql)
+            sqlTotal = "SELECT COUNT(1) FROM man_auth_user WHERE USER_LOGIN='1' AND USER_ID='{0}' AND USER_PWD='{1}';".format(id, pwd)
+            list = PySQL.get(sql)
+            total = PySQL.count(sqlTotal)
+            return list, total
         except Exception as e:
             print('ERROR {}'.format(e))
             Utils.log('ERROR {}'.format(e))

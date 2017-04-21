@@ -104,7 +104,16 @@ class ProjectManageEditForm extends React.Component {
         <Row>
           <Col sm={24} md={24}>
             <FormItem label="项目类型" {...formItemLayout}>
-              <TdSelect {...getFieldProps('proType', { initialValue: '' })}
+              <TdSelect {...getFieldProps('proType', {
+                initialValue: formData.PRO_TYPE !== undefined ? formData.PRO_TYPE : '',
+                validate: [{
+                  rules: [
+                    { required: true, message: '请选择项目类型', whitespace: true },
+                  ],
+                  trigger: 'onBlur',
+                }],
+                validateFirst: true,
+              })}
                 dict={{ dict_value: 'TYPE_ID', dict_text: 'TYPE_TEXT' }}
                 data={obj.state.proType} blankText="请选择"
               />

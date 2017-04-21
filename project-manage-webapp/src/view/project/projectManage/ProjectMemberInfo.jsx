@@ -148,7 +148,7 @@ class ProjectMemberInfo extends React.Component {
           );
         },
       },
-      { title: '项目名称', dataIndex: 'PRO_NAME', width: 250, render: (text) => buildTableTip(text, 250) },
+      { title: '负责模块', dataIndex: 'PRO_NAME', width: 250, render: (text) => buildTableTip(text, 250) },
     ];
     // 渲染虚拟DOM
     return (
@@ -157,7 +157,7 @@ class ProjectMemberInfo extends React.Component {
           formReset={this.state.formReset}
           onSubmit={this.handleFormSubmit.bind(this)}
           onReset={this.handleFormReset.bind(this)}
-          />
+        />
         <p className="br" />
 
         <TdPageTable rowKey={record => record.USER_ID}
@@ -168,7 +168,7 @@ class ProjectMemberInfo extends React.Component {
           reload={this.state.tdTableReload}
           renderResult={this.renderTableList.bind(this)}
           columns={tableColumns}
-          />
+        />
       </div>
     );
   }

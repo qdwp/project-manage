@@ -38,8 +38,27 @@ class ProjectUserDao(object):
                     start=start,
                     size=size
                     )
+            
+            sqlTotal = """
+                SELECT COUNT(1)
+                FROM man_auth_user AS user
+                WHERE user.USER_CREATOR='{userCreator}'
+                {id}{name}
+                AND user.USER_ID NOT IN (
+                    SELECT member.USER_ID
+                    FROM man_pro_member AS member
+                    WHERE member.USER_CREATOR='{userCreator}'
+                    AND member.PRO_ID='{proId}'
+                )
+                ORDER BY USER_ID;
+                """.format(
+                    userCreator=userCreator,
+                    proId=proId,
+                    id=' AND USER_ID like "%{}%"'.format(userId) if userId else '',
+                    name=' AND USER_NAME like "%{}%"'.format(userName) if userName else ''
+                    )
             list = PySQL.get(sql)
-            total = len(list)
+            total = PySQL.count(sqlTotal)
             return list, total
         except Exception as e:
             print('ERROR {}'.format(e))
@@ -66,8 +85,22 @@ class ProjectUserDao(object):
                     start=start,
                     size=size
                     )
+            sqlTotal = """
+                SELECT COUNT(1)
+                FROM man_pro_member
+                WHERE PRO_ID='{proId}'
+                {id}{name}
+                ORDER BY USER_ID
+                LIMIT {start}, {size};
+                """.format(
+                    proId=proId,
+                    id=' AND USER_ID like "%{}%"'.format(userId) if userId else '',
+                    name=' AND USER_NAME like "%{}%"'.format(userName) if userName else '',
+                    start=start,
+                    size=size
+                    )
             list = PySQL.get(sql)
-            total = len(list)
+            total = PySQL.count(sqlTotal)
             return list, total
         except Exception as e:
             print('ERROR {}'.format(e))

@@ -40,6 +40,8 @@ class LoginHandler(BaseHandler):
                 info['token'] = token
                 rsp.setSuccess()
                 rsp.setObj(info)
+            else:
+                rsp.setInfo("登录失败, 请检查用户名或密码是否正确")
         else:
             pass
         self.write(rsp.toDict())

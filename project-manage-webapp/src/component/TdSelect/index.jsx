@@ -1,7 +1,7 @@
 import React from 'react';
 import { Icon, Select } from 'antd';
 import { callAjax } from '../../common/util';
-import { openNotice } from "../../common/antdUtil";
+import { openNotice } from '../../common/antdUtil';
 
 /**
  * <TdSelect data=[] />
@@ -71,7 +71,7 @@ class TdSelect extends React.Component {
   }
 }
 
-//定义组件标签的可配置属性
+// 定义组件标签的可配置属性
 TdSelect.defaultProps = {
   url: "",
   param: {},

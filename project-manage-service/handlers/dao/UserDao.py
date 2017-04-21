@@ -33,18 +33,17 @@ class UserDao(object):
                     )
             Utils.log('查询数据库用户列表SQL', sql)
             list = PySQL.get(sql)
-            # sqlTotal = """
-            #     SELECT 1 FROM man_auth_user
-            #     WHERE 1=1
-            #     {}{}{}{};
-            #     """.format(
-            #         ' AND USER_ID like "%{}%"'.format(userId) if userId else '',
-            #         ' AND USER_NAME like "%{}%"'.format(userName) if userName else '',
-            #         ' AND USER_AUTH = "{}"'.format(userAuth) if userAuth else '',
-            #         ' AND USER_LOGIN = "{}"'.format(userLogin) if userLogin else ''
-            #         )
-            # total = PySQL.execute(sqlTotal)
-            total = len(list)
+            sqlTotal = """
+                SELECT COUNT(1) FROM man_auth_user
+                WHERE 1=1
+                {}{}{}{};
+                """.format(
+                    ' AND USER_ID like "%{}%"'.format(userId) if userId else '',
+                    ' AND USER_NAME like "%{}%"'.format(userName) if userName else '',
+                    ' AND USER_AUTH = "{}"'.format(userAuth) if userAuth else '',
+                    ' AND USER_LOGIN = "{}"'.format(userLogin) if userLogin else ''
+                    )
+            total = PySQL.count(sqlTotal)
             return list, total
         except Exception as e:
             print('ERROR {}'.format(e))

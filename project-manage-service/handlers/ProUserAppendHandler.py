@@ -71,7 +71,7 @@ class ProUserAppendHandler(BaseHandler):
 
     def queryInfo(self):
         """
-        加载小组项目中的成员
+        加载小组项目中的成员及负责模块
         """
         token = self.get_argument('token', None)
         page = self.get_argument('pageNum', 1)
