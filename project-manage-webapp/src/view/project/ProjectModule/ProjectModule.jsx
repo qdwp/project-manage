@@ -317,10 +317,10 @@ class ProjectModule extends React.Component {
               </Form>
               <Modal title="请选择项目" visible={this.state.modalVisible}
                 confirmLoading={this.state.confirmLoading}
-                onCancel={() => { this.setState({ modalVisible: false }); } }
-                onOk={this.handleModalOk.bind(this)} width="900"
+                onCancel={() => { this.setState({ modalVisible: false }); }}
+                footer={null} width="900"
               >
-                <ProjectModal formReset={this.state.formReset}
+                <ProjectModal
                   validCallback={(success, data) => {
                     this.callbackValid(success, data);
                   } }

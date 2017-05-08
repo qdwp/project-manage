@@ -36,6 +36,13 @@ class ProjectModal extends React.Component {
     });
   }
 
+  handleFormReset() {
+    this.setState({
+      tableSelectedRows: [],
+      tableSelectedRowKeys: [],
+    });
+  }
+
   handlerRowClick(record, index) {
     console.log(record, index);
     const { validCallback } = this.props;
@@ -63,7 +70,6 @@ class ProjectModal extends React.Component {
     // 渲染虚拟DOM
     return (
       <div>
-        <TdCard hideHead="true" shadow="true">
           <ProjectManageSearchForm
             onSubmit={this.handleFormSubmit.bind(this)}
             onReset={this.handleFormReset.bind(this)}
@@ -78,7 +84,6 @@ class ProjectModal extends React.Component {
             renderResult={this.renderTableList.bind(this)}
             columns={tableColumns}
           />
-        </TdCard>
       </div>
     );
   }
