@@ -14,7 +14,7 @@ from handlers.dao.ProjectTypeDao import ProjectTypeDao
 
 class ProjectTypeHandler(BaseHandler):
     """
-    获取用户列表
+    获取项目类型列表
     """
 
     @tornado.web.authenticated
@@ -30,7 +30,7 @@ class ProjectTypeHandler(BaseHandler):
     @tornado.web.authenticated
     def post(self, opt):
         """
-        用户列表
+        项目类型列表
         """
         rsp = RspInfo()
         # for case in switch(opt):
@@ -54,7 +54,7 @@ class ProjectTypeHandler(BaseHandler):
 
     def queryList(self):
         """
-        加载小组中不在当前项目中的成员
+        加载项目类型
         """
         token = self.get_argument('token', None)
         
@@ -73,81 +73,81 @@ class ProjectTypeHandler(BaseHandler):
             del(dao)
         return rsp
 
-    def queryInfo(self):
-        """
-        加载小组项目中的成员
-        """
-        token = self.get_argument('token', None)
-        page = self.get_argument('pageNum', 1)
-        size = self.get_argument('pageSize', 10)
-        proId = self.get_argument('proId', None)
-        userId = self.get_argument('userId', None)
-        userName = self.get_argument('userName', None)
+    # def queryInfo(self):
+    #     """
+    #     加载小组项目中的成员
+    #     """
+    #     token = self.get_argument('token', None)
+    #     page = self.get_argument('pageNum', 1)
+    #     size = self.get_argument('pageSize', 10)
+    #     proId = self.get_argument('proId', None)
+    #     userId = self.get_argument('userId', None)
+    #     userName = self.get_argument('userName', None)
         
-        rsp = RspInfo()
-        try:
-            dao = ProjectTypeDao()
-            list, total = dao.getInfo(page, size, proId, userId, userName)
-            rsp.setSuccess()
-            rsp.setInfo("加载成员成功")
-            rsp.setData(list, total)
-        except Exception as e:
-            print('ERROR {}'.format(e))
-            Utils.log('ERROR {}'.format(e))
-            rsp.setInfo("加载成员失败")
-        finally:
-            del(dao)
-        return rsp
+    #     rsp = RspInfo()
+    #     try:
+    #         dao = ProjectTypeDao()
+    #         list, total = dao.getInfo(page, size, proId, userId, userName)
+    #         rsp.setSuccess()
+    #         rsp.setInfo("加载成员成功")
+    #         rsp.setData(list, total)
+    #     except Exception as e:
+    #         print('ERROR {}'.format(e))
+    #         Utils.log('ERROR {}'.format(e))
+    #         rsp.setInfo("加载成员失败")
+    #     finally:
+    #         del(dao)
+    #     return rsp
     
-    def append(self):
-        """
-        将项目成员添加的当前的项目中，以待分配模块任务
-        """
-        token = self.get_argument('token', None)
-        proId = self.get_argument('proId', None)
-        proName = self.get_argument('proName', None)
-        userCreator = self.get_current_user()['userId'] or None
-        users = self.get_argument('users', None)
-        Utils.log(users)
-        allUsers = json.loads(users)
+    # def append(self):
+    #     """
+    #     将项目成员添加的当前的项目中，以待分配模块任务
+    #     """
+    #     token = self.get_argument('token', None)
+    #     proId = self.get_argument('proId', None)
+    #     proName = self.get_argument('proName', None)
+    #     userCreator = self.get_current_user()['userId'] or None
+    #     users = self.get_argument('users', None)
+    #     Utils.log(users)
+    #     allUsers = json.loads(users)
         
-        rsp = RspInfo()
-        try:
-            dao = ProjectTypeDao()
-            res = dao.append(proId, proName, userCreator, allUsers)
-            if res:
-                rsp.setSuccess()
-                rsp.setInfo("添加成员成功")
-        except Exception as e:
-            print('ERROR {}'.format(e))
-            Utils.log('ERROR {}'.format(e))
-            rsp.setInfo("添加成员失败")
-        finally:
-            del(dao)
-        return rsp
+    #     rsp = RspInfo()
+    #     try:
+    #         dao = ProjectTypeDao()
+    #         res = dao.append(proId, proName, userCreator, allUsers)
+    #         if res:
+    #             rsp.setSuccess()
+    #             rsp.setInfo("添加成员成功")
+    #     except Exception as e:
+    #         print('ERROR {}'.format(e))
+    #         Utils.log('ERROR {}'.format(e))
+    #         rsp.setInfo("添加成员失败")
+    #     finally:
+    #         del(dao)
+    #     return rsp
 
-    def remove(self):
-        """
-        移除项目成员，已分配任务的不可移除
-        """
-        token = self.get_argument('token', None)
-        proId = self.get_argument('proId', None)
-        userId = self.get_argument('userId', None)
+    # def remove(self):
+    #     """
+    #     移除项目成员，已分配任务的不可移除
+    #     """
+    #     token = self.get_argument('token', None)
+    #     proId = self.get_argument('proId', None)
+    #     userId = self.get_argument('userId', None)
         
-        rsp = RspInfo()
-        try:
-            dao = ProjectTypeDao()
-            if dao.valid(proId, userId):
-                Utils.log('INFO', '已分配任务的不可移除')
-                rsp.setInfo('已分配任务的成员不可移除')
-            else:
-                res = dao.remove(proId, userId)
-                rsp.setSuccess()
-                rsp.setInfo("移除项目成员成功")
-        except Exception as e:
-            print('ERROR {}'.format(e))
-            Utils.log('ERROR {}'.format(e))
-            rsp.setInfo("移除项目成员失败")
-        finally:
-            del(dao)
-        return rsp
+    #     rsp = RspInfo()
+    #     try:
+    #         dao = ProjectTypeDao()
+    #         if dao.valid(proId, userId):
+    #             Utils.log('INFO', '已分配任务的不可移除')
+    #             rsp.setInfo('已分配任务的成员不可移除')
+    #         else:
+    #             res = dao.remove(proId, userId)
+    #             rsp.setSuccess()
+    #             rsp.setInfo("移除项目成员成功")
+    #     except Exception as e:
+    #         print('ERROR {}'.format(e))
+    #         Utils.log('ERROR {}'.format(e))
+    #         rsp.setInfo("移除项目成员失败")
+    #     finally:
+    #         del(dao)
+    #     return rsp

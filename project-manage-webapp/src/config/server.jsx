@@ -22,5 +22,6 @@ export const url = {
     userAppend: `${hostUrl}/project/user/append`,
     userRemove: `${hostUrl}/project/user/remove`,
     typeList: `${hostUrl}/project/type/list`,
+    file: `${hostUrl}/project/file`,
   },
 };

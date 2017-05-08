@@ -148,7 +148,7 @@ class ProjectMemberInfo extends React.Component {
           );
         },
       },
-      { title: '负责模块', dataIndex: 'PRO_NAME', width: 250, render: (text) => buildTableTip(text, 250) },
+      { title: '负责模块', dataIndex: 'MODULE_NAME', width: 250, render: (text) => buildTableTip(text, 250) },
     ];
     // 渲染虚拟DOM
     return (

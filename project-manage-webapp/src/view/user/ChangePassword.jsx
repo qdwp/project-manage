@@ -163,6 +163,8 @@ class ChangePassword extends React.Component {
     });
     return (
       <TdCard hideHead='true' shadow='true'>
+        <h3>修改密码</h3>
+        <hr />
         <div style={{ maxWidth: 600, margin: 'auto' }}>
           <Form className="compact-form" horizontal>
             <Row>

@@ -6,7 +6,7 @@
     ]},
     {"key": "auth", "text": "组员", "to": "", "icon": "user", "children": [
         {"key": "userManag", "text": "用户管理1", "to": "main/auth/userManage"},
-        {"key": "roleManage", "text": "角色管理", "to": "main/auth/roleManage"},
+        {"key": "roleManage", "text": "分配任务", "to": "main/auth/roleManage"},
         {"key": "orgManage", "text": "机构管理", "to": "main/auth/orgManage"},
         {"key": "menuManage", "text": "菜单管理", "to": "main/auth/menuManage"}
     ]}

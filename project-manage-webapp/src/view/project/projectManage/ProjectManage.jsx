@@ -440,7 +440,7 @@ class ProjectManage extends React.Component {
         title: '是否启动', dataIndex: 'PRO_USE', width: 120, render: (text) => {
           return (
             <span>
-              {text === '0' ? '禁用' : '启用'}
+              {text === '0' ? <font color="#FF4500">禁用</font> : <font color="#00CD00">启用</font>}
             </span>
           );
         },

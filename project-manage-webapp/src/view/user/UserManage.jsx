@@ -336,7 +336,7 @@ class UserManage extends React.Component {
         title: '用户状态', dataIndex: 'USER_LOGIN', width: 100, render: (text) => {
           return (
             <span>
-              {text === '0' ? '禁用' : '启用'}
+              {text === '0' ? <font color="#FF4500">禁用</font> : <font color="#00CD00">启用</font>}
             </span>
           );
         },

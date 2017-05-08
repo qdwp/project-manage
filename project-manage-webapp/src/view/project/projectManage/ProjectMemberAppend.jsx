@@ -105,7 +105,7 @@ class ProjectMemberAppend extends React.Component {
         title: '是否启用', dataIndex: 'USER_LOGIN', width: 120, render: (text) => {
           return (
             <span>
-              {text === '0' ? '禁用' : '启用'}
+              {text === '0' ? <font color="#FF4500">禁用</font> : <font color="#00CD00">启用</font>}
             </span>
           );
         },

@@ -4,7 +4,7 @@
 import pymysql
 
 
-# 设置连接数据库的配置，字符集 utf8mb4, 结果集 字典
+# 设置连接数据库的配置，字符集 utf8mb4, 结果集"字典"DictCursor
 config = {
     'host': '127.0.0.1',
     'port': 3306,

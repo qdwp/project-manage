@@ -5,9 +5,9 @@
     ]},
     {"key": "project", "text": "项目管理", "to": "", "icon": "book", "children": [
         {"key": "projectManage", "text": "项目管理", "to": "main/project/manage", "icon": "book"},
-        {"key": "projectConfig", "text": "项目配置", "to": "main/project/config", "icon": "book"},
-        {"key": "orgManage", "text": "机构管理", "to": "main/auth/orgManage", "icon": "book"},
-        {"key": "menuManage", "text": "菜单管理", "to": "main/auth/menuManage", "icon": "book"}
+        {"key": "projectConfig", "text": "分配任务", "to": "main/project/module", "icon": "book"},
+        {"key": "modManage", "text": "任务管理", "to": "main/project/modManage", "icon": "book"},
+        {"key": "menuManage", "text": "项目进度", "to": "main/auth/menuManage", "icon": "book"}
     ]},
     {"key": "debug", "text": "调试调优", "to": "", "icon": "book", "children": [
         {"key": "projectManage1", "text": "项目管理1", "to": "main/project/manage", "icon": "book"},

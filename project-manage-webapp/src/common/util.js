@@ -298,6 +298,7 @@ function doNormalRequest(type, opt, data, dataType, contentType, asyn, successCa
   // const tk = data.token ? data.token : null;
   // const arr = opt.url.split('/');
   // const name = arr[arr.length - 1].split('.')[0];
+  // 添加登录信息
   data.token = getLoginInfo().token;
   window.$.support.cors = true;  // IE8下cors跨域访问
   window.$.ajax({

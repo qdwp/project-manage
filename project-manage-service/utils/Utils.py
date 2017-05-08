@@ -4,8 +4,8 @@
 import hashlib
 import time
 from jose import jwt
-from utils.extraData import SECRET
-from utils.extraData import LOGFILE
+from utils.Config import SECRET
+from utils.Config import LOGFILE
 
 class Utils(object):
     """

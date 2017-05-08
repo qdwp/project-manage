@@ -17,8 +17,11 @@ import Error410 from '../view/error/410/Error410';
 import UserManage from '../view/user/UserManage';
 import ChangePassword from '../view/user/ChangePassword';
 
-// 项目管理s
+// 项目管理
 import ProjectManage from '../view/project/projectManage/ProjectManage';
+
+// 模块信息
+import ProjectModule from '../view/project/ProjectModule/ProjectModule';
 
 // 针对IE8的补丁(_IEVersion from index.html)
 if (!isNaN(window._IEVersion) && window._IEVersion < 9) {
@@ -81,6 +84,7 @@ ReactDOM.render(
           <Route path="user/manage" component={UserManage} />
           <Route path="user/password" component={ChangePassword} />
           <Route path="project/manage" component={ProjectManage} />
+          <Route path="project/module" component={ProjectModule} />
 
 
           <Route path="*" component={Error404} />

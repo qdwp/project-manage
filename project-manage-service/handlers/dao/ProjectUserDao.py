@@ -72,35 +72,42 @@ class ProjectUserDao(object):
         start = ( int(page) - 1) * int(size)
         try:
             sql = """
-                SELECT *
-                FROM man_pro_member
-                WHERE PRO_ID='{proId}'
+                SELECT mem.*, task.MODULE_ID, task.MODULE_NAME
+                FROM man_pro_member AS mem
+                LEFT JOIN man_pro_task AS task
+                ON mem.PRO_ID = task.PRO_ID
+                AND mem.USER_ID = task.USER_ID
+                WHERE mem.PRO_ID='{proId}'
                 {id}{name}
-                ORDER BY USER_ID
+                ORDER BY mem.USER_ID
                 LIMIT {start}, {size};
                 """.format(
                     proId=proId,
-                    id=' AND USER_ID like "%{}%"'.format(userId) if userId else '',
-                    name=' AND USER_NAME like "%{}%"'.format(userName) if userName else '',
+                    id=' AND mem.USER_ID like "%{}%"'.format(userId) if userId else '',
+                    name=' AND mem.USER_NAME like "%{}%"'.format(userName) if userName else '',
                     start=start,
                     size=size
                     )
             sqlTotal = """
                 SELECT COUNT(1)
-                FROM man_pro_member
-                WHERE PRO_ID='{proId}'
+                FROM man_pro_member AS mem
+                LEFT JOIN man_pro_task AS task
+                ON mem.PRO_ID = task.PRO_ID
+                AND mem.USER_ID = task.USER_ID
+                WHERE mem.PRO_ID='{proId}'
                 {id}{name}
-                ORDER BY USER_ID
+                ORDER BY mem.USER_ID
                 LIMIT {start}, {size};
                 """.format(
                     proId=proId,
-                    id=' AND USER_ID like "%{}%"'.format(userId) if userId else '',
-                    name=' AND USER_NAME like "%{}%"'.format(userName) if userName else '',
+                    id=' AND mem.USER_ID like "%{}%"'.format(userId) if userId else '',
+                    name=' AND mem.USER_NAME like "%{}%"'.format(userName) if userName else '',
                     start=start,
                     size=size
                     )
             list = PySQL.get(sql)
             total = PySQL.count(sqlTotal)
+            Utils.log('查询项目成员负责模块 {}'.format(sql))
             return list, total
         except Exception as e:
             print('ERROR {}'.format(e))

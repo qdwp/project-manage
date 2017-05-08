@@ -15,7 +15,7 @@ class Home extends React.Component {
   render() {
     return (
       <div>
-        <h2>首页&nbsp; -&nbsp; 棠棣支付运营管理权限系统</h2><br />
+        <h2>首页&nbsp; -&nbsp; 基于React前端的项目管理系统</h2><br />
         <Row gutter={16}>
           <Col sm={24} md={24}>
             <Row>
