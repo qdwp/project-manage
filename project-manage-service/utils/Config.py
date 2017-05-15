@@ -14,4 +14,4 @@ UPLOADPATH = '../static/file/'
 DOWNLOAD_HOST = 'http://127.0.0.1:5001/'
 
 # token 过期时间
-TTL = 20 * 60 * 60
+TTL = 20 * 60
