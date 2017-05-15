@@ -3,17 +3,7 @@
         {"key": "userManage", "text": "用户管理", "to": "main/user/manage", "icon": "user"},
         {"key": "userPwd", "text": "密码修改", "to": "main/user/password", "icon": "user"}
     ]},
-    {"key": "project", "text": "项目管理", "to": "", "icon": "book", "children": [
-        {"key": "projectManage", "text": "项目管理", "to": "main/project/manage", "icon": "book"},
-        {"key": "projectConfig", "text": "分配任务", "to": "main/project/module", "icon": "book"},
-        {"key": "modManage", "text": "任务管理", "to": "main/project/modManage", "icon": "book"},
-        {"key": "menuManage", "text": "项目进度", "to": "main/auth/menuManage", "icon": "book"}
-    ]},
-    {"key": "debug", "text": "调试调优", "to": "", "icon": "book", "children": [
-        {"key": "projectManage1", "text": "项目管理1", "to": "main/project/manage", "icon": "book"},
-        {"key": "projectConfig1", "text": "项目配置1", "to": "main/project/config", "icon": "book"},
-        {"key": "orgManage1", "text": "机构管理1", "to": "main/auth/orgManage", "icon": "book"},
-        {"key": "menuManage1", "text": "菜单管理1", "to": "main/auth/menuManage", "icon": "book"}
+    {"key": "event", "text": "我的待办", "to": "", "icon": "message", "children": [
+        {"key": "applyEvent", "text": "账号申请", "to": "main/user/apply", "icon": "message"}
     ]}
-    
 ]

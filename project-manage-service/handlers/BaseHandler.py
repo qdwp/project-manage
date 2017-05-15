@@ -3,7 +3,10 @@
 
 import tornado.web
 import json
+
 from utils.Utils import Utils
+from utils.RspInfo import RspInfo
+from dbservers.Redis import MyRedis
 
 
 class BaseHandler(tornado.web.RequestHandler):
@@ -13,19 +16,34 @@ class BaseHandler(tornado.web.RequestHandler):
     """
 
     def get_current_user(self):
-        token = self.get_argument('token', None)
         Utils.log(self.request.body)
-        return Utils.getUserInfo(token)
+        token = self.get_argument('token', None)
+        # 查询 Redis 数据库
+        r = MyRedis()
+        info = Utils.getUserInfo(token)
+        v = r.get(info['userId'])
+        if v:
+            if str(v, encoding="utf-8") == token:
+                r.expire(info['userId'])
+                return Utils.getUserInfo(token)
+            else:
+                rsp = RspInfo('_SSO', '您的账号已在其他地方登陆, 即将刷新页面')
+                self.write(rsp.toDict())
+                self.finish()
+                return {}
+        else:
+            rsp = RspInfo('_SSO', '您的账号已登录超时, 即将跳转到登录页面')
+            self.write(rsp.toDict())
+            self.finish()
+            return {}
 
     def write_error(self, status_code, **kwargs):
         """
         重写错误状态码信息
         """
-        respose_info = {
-            'status': '9999',
-            'msg': u'错误的请求',
-            'code': status_code,
-        }
+        rsp = RspInfo()
+        rsp.setObj(status_code)
+        rsp.setInfo("错误的请求")
         self.write(respose_info)
 
 

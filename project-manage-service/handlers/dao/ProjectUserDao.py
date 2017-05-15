@@ -11,6 +11,25 @@ class ProjectUserDao(object):
     def __init__(self):
         pass
 
+    def getListAll(self, proId):
+        """
+        查询数据库所属项目成员列表
+        """
+        try:
+            sql = """
+                SELECT USER_ID, USER_NAME
+                FROM man_pro_member
+                WHERE PRO_ID='{proId}'
+                ORDER BY USER_NAME ASC;
+                """.format(proId=proId)
+            
+            list = PySQL.get(sql)
+            return list
+        except Exception as e:
+            print('ERROR {}'.format(e))
+            Utils.log('ERROR {}'.format(e))
+            return []
+
     def getList(self, page, size, proId, userCreator, userId, userName):
         """
         查询数据库 user 列表
@@ -20,7 +39,7 @@ class ProjectUserDao(object):
             sql = """
                 SELECT user.*
                 FROM man_auth_user AS user
-                WHERE user.USER_CREATOR='{userCreator}'
+                WHERE (user.USER_CREATOR='{userCreator}' OR user.USER_ID='{userCreator}')
                 {id}{name}
                 AND user.USER_ID NOT IN (
                     SELECT member.USER_ID
@@ -42,7 +61,7 @@ class ProjectUserDao(object):
             sqlTotal = """
                 SELECT COUNT(1)
                 FROM man_auth_user AS user
-                WHERE user.USER_CREATOR='{userCreator}'
+                WHERE (user.USER_CREATOR='{userCreator}' OR user.USER_ID='{userCreator}')
                 {id}{name}
                 AND user.USER_ID NOT IN (
                     SELECT member.USER_ID
@@ -57,6 +76,7 @@ class ProjectUserDao(object):
                     id=' AND USER_ID like "%{}%"'.format(userId) if userId else '',
                     name=' AND USER_NAME like "%{}%"'.format(userName) if userName else ''
                     )
+            Utils.log('查询项目成员列表 {}'.format(sql))
             list = PySQL.get(sql)
             total = PySQL.count(sqlTotal)
             return list, total

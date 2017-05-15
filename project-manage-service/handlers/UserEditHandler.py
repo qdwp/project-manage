@@ -81,17 +81,20 @@ class UserEditHandler(BaseHandler):
         userName = self.get_argument('userName', None)
         userAuth = self.get_argument('userAuth', None)
         userLogin = self.get_argument('userLogin', None)
+        currentAuth = self.get_current_user()['userAuth'] or 9
         rsp = RspInfo()
         try:
             dao = UserDao()
-            res = dao.update(userId, userName, userAuth, userLogin)
+            res = dao.update(userId, userName, userAuth, userLogin, currentAuth)
             if res:
                 rsp.setSuccess()
                 rsp.setInfo("更新用户成功")
+            else:
+                rsp.setInfo("更新用户失败")
         except Exception as e:
             print('ERROR {}'.format(e))
             Utils.log('ERROR {}'.format(e))
-            rsp.setInfo("修改用户失败")
+            rsp.setInfo("更新用户失败")
         finally:
             del(dao)
         return rsp
@@ -102,13 +105,16 @@ class UserEditHandler(BaseHandler):
         """
         token = self.get_argument('token', None)
         userId = self.get_argument('userId', None)
+        currentAuth = self.get_current_user()['userAuth'] or 9
         rsp = RspInfo()
         try:
             dao = UserDao()
-            res = dao.delete(userId)
+            res = dao.delete(userId, currentAuth)
             if res:
                 rsp.setSuccess()
                 rsp.setInfo("删除用户成功")
+            else:
+                rsp.setInfo("删除用户失败")
         except Exception as e:
             print('ERROR {}'.format(e))
             Utils.log('ERROR {}'.format(e))
@@ -123,10 +129,11 @@ class UserEditHandler(BaseHandler):
         """
         token = self.get_argument('token', None)
         userId = self.get_argument('userId', None)
+        currentAuth = self.get_current_user()['userAuth'] or 9
         rsp = RspInfo()
         try:
             dao = UserDao()
-            res = dao.reset(userId)
+            res = dao.reset(userId, currentAuth)
             if res:
                 rsp.setSuccess()
                 rsp.setInfo("重置用户密码成功")

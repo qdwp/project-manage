@@ -1,13 +1,22 @@
 [
-    {"key": "userCenter", "text": "用户中心", "to": "", "icon": "user", "children": [
+    {"key": "auth", "text": "用户中心", "to": "", "icon": "user", "children": [
         {"key": "userManage", "text": "用户管理", "to": "main/user/manage", "icon": "user"},
         {"key": "userPwd", "text": "密码修改", "to": "main/user/password", "icon": "user"}
     ]},
-    {"key": "auth", "text": "组长", "to": "", "icon": "user", "children": [
-        {"key": "userManag", "text": "项目管理", "to": "main/project/manage", "icon": "book"},
-        {"key": "roleManage", "text": "分配任务", "to": "main/auth/roleManage"},
-        {"key": "orgManage", "text": "机构管理", "to": "main/auth/orgManage"},
-        {"key": "menuManage", "text": "菜单管理", "to": "main/auth/menuManage"}
+    {"key": "project", "text": "项目管理", "to": "", "icon": "book", "children": [
+        {"key": "projectManage", "text": "项目管理", "to": "main/project/manage", "icon": "book"},
+        {"key": "moduleAppend", "text": "分配任务", "to": "main/project/module", "icon": "book"},
+        {"key": "moduleManage", "text": "任务管理", "to": "main/module/manage", "icon": "book"}
+    ]},
+    {"key": "rate", "text": "项目进度", "to": "", "icon": "line-chart", "children": [
+        {"key": "projectRate", "text": "项目进度", "to": "main/project/rate", "icon": "line-chart"}
+    ]},
+    {"key": "debug", "text": "调试调优", "to": "", "icon": "exception", "children": [
+        {"key": "bugAppend", "text": "添加问题", "to": "main/bug/append", "icon": "exception"},
+        {"key": "bugManage", "text": "问题管理", "to": "main/bug/manage", "icon": "exception"},
+        {"key": "bugNotice", "text": "调试公告", "to": "main/bug/notice", "icon": "exception"}
+    ]},
+    {"key": "setting", "text": "管理中心", "to": "", "icon": "setting", "children": [
+        {"key": "downloadCenter", "text": "下载中心", "to": "main/setting/download", "icon": "setting"}
     ]}
-    
 ]

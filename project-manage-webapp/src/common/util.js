@@ -273,7 +273,7 @@ export function refreshLoginInfo(tk, asyn) {
             openNotice('info', '您可能已使用其他账户登录，3秒后将刷新页面');
             setTimeout(() => { location.reload(); }, 3000);
           }
-        } else if (result.rspCode === rspInfo.RSP_OTHER) {
+        } else if (result.rspCode === rspInfo.RSP_SSO) {
           openNotice('warning', result.rspInfo);
           setTimeout(() => {
             if (document.getElementById('hiddenLogoutBtn')) {
@@ -283,11 +283,11 @@ export function refreshLoginInfo(tk, asyn) {
             }
           }, 3200);
         } else {
-          openNotice('warning', result.rspInfo);
+          openNotice('error', result.rspCode);
         }
       },
       error: () => {
-        openNotice('warning', '请求发送失败', '错误');
+        openNotice('error', '请求发送失败');
       },
     });
   }
@@ -314,9 +314,9 @@ function doNormalRequest(type, opt, data, dataType, contentType, asyn, successCa
     //   req.setRequestHeader('req-auth', buildReqSign(name, data, tk));
     // },
     success: (result, status, xhr) => {
-      const cod = result.rspCod;
+      const cod = result.rspCode;
       // validResSign(cod + result.rspHash, null, result.rspAuth, cod === '_SSO_ERR' ? null : tk);
-      if (cod === rspInfo.RSP_OTHER) {
+      if (cod === rspInfo.RSP_SSO) {
         openNotice('error', result.rspInfo);
         setTimeout(() => {
           document.getElementById('hiddenLogoutBtn').click();

@@ -43,13 +43,12 @@ class ProjectDao(object):
                 ORDER BY PRO_ID;
                 """.format(
                     ' AND PRO_ID like "%{}%"'.format(proId) if proId else '',
-                    ' AND PRO_Name like "%{}%"'.format(proName) if proName else '',
+                    ' AND PRO_NAME like "%{}%"'.format(proName) if proName else '',
                     ' AND PRO_TYPE = "{}"'.format(proType) if proType else '',
                     ' AND PRO_USE = "{}"'.format(proUse) if proUse else '',
                     ' AND PRO_LEADER = "{}"'.format(userCreator) if userCreator else ''
                     )
             total = PySQL.count(sqlTotal)
-            total = len(list)
             return list, total
         except Exception as e:
             print('ERROR {}'.format(e))

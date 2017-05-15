@@ -121,8 +121,8 @@ class ProjectManage extends React.Component {
       const proId = this.state.tableSelectedRowKeys[0];
       const obj = this;
       confirm({
-        title: '您是否确认要删除选中项目 ?',
-        content: '',
+        title: '删除',
+        content: '您是否确认要删除选中项目 ?',
         onOk() {
           console.log('onOk');
           const opt = {
@@ -157,50 +157,6 @@ class ProjectManage extends React.Component {
       openNotice('warning', '请选择要删除的项目记录', '提示');
     }
   }
-
-  // // 重置密码
-  // handleRestPwdLinkClick() {
-  //   if (this.state.tableSelectedRows.length > 0) {
-  //     console.log('重置密码', this.state.tableSelectedRowKeys, this.state.tableSelectedRows);
-  //     const userId = this.state.tableSelectedRowKeys[0];
-  //     const obj = this;
-  //     confirm({
-  //       title: `您是否确认要重置用户 ${userId} 的密码 ?`,
-  //       content: '',
-  //       onOk() {
-  //         console.log('onOk');
-  //         const opt = {
-  //           url: url.user.reset,
-  //           type: 'POST',
-  //           data: { userId },
-  //         };
-  //         console.log(opt);
-  //         callAjax(opt, (result) => {
-  //           if (result.rspCode === rspInfo.RSP_SUCCESS) {
-  //             openNotice('success', '重置密码成功', '提示');
-  //             // 重新加载table数据
-  //             obj.setState({
-  //               tdTableReload: true,
-  //               tableSelectedRowKeys: [],
-  //               tableSelectedRows: [],
-  //             }, () => {
-  //               obj.setState({
-  //                 tdTableReload: false,
-  //               });
-  //             });
-  //           } else {
-  //             openNotice('error', result.rspInfo, '提示');
-  //           }
-  //         }, (rep, info, opt) => {
-  //           openNotice('error', rspInfo.RSP_NETWORK_ERROR, '提示');
-  //         });
-  //       },
-  //       onCancel() { },
-  //     });
-  //   } else {
-  //     openNotice('warning', '请选择要删除的用户记录', '提示');
-  //   }
-  // }
 
   // 模态框确认点击事件，修改子页面props valid状态,触发子页面执行回调
   handleModalOk() {
@@ -464,14 +420,7 @@ class ProjectManage extends React.Component {
       { icon: 'plus', text: '新增', click: () => { obj.handleAddBtnClick(); } },
       { icon: 'edit', text: '修改', click: () => { obj.handlerEditBtnClick(); } },
       { icon: 'delete', text: '删除', click: () => { obj.handlerDeleteBtnClick(); } },
-      // { icon: 'notification', text: '重置密码', click: () => { obj.handleRestPwdLinkClick(); } },
     ];
-    // const ProjectMemberAppendForm = () => <ProjectMemberAppend
-    //   project={this.state.project}
-    //   formData={this.state.formData}
-    //   onOk={this.appendOk.bind(this)}
-    //   onNo={this.appendNo.bind(this)}
-    // />;
     // 渲染虚拟DOM
     return (
       <div>

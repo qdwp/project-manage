@@ -1,45 +1,33 @@
 import React from 'react';
-import { Modal, Form, Row, Col, Input, Select, DatePicker, Button } from 'antd';
-import { getLoginInfo, callAjax } from '../../../common/util';
+import { Modal, Form, Row, Col, Input, DatePicker, Button } from 'antd';
+import { getLoginInfo, callAjax, filterObject } from '../../../common/util';
 import { url } from '../../../config/server';
 import { rspInfo } from '../../../common/authConstant';
 import TdCard from '../../../component/TdCard';
 import TdSelect from '../../../component/TdSelect';
 import { openNotice } from '../../../common/antdUtil';
-import ProjectModal from './ProjectModal';
+import ProjectModuleModal from './ProjectModuleModal';
 
 const FormItem = Form.Item;
 const RangePicker = DatePicker.RangePicker;
-const Option = Select.Option;
 
 class ProjectModule extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      project: {},
-      member: {},
+      member: [],
       fileName: '',
       fileStatus: false,
       modalVisible: false,
+      selectProjectId: '',
+      selectProjectName: '',
+      modStart: '',
+      modEnd: '',
     };
   }
 
   componentDidMount() {
-    const obj = this;
-    const param = {};
-    const opt = {
-      url: url.project.list,
-      type: 'POST',
-      dataType: 'json',
-      data: param,
-    };
-    callAjax(opt, (result) => {
-      if (result.rspCode === rspInfo.RSP_SUCCESS) {
-        obj.setState({ project: result.rspData.list });
-      }
-    }, () => {
-      //
-    });
+    //
   }
 
   onClickAFlag() {
@@ -51,9 +39,6 @@ class ProjectModule extends React.Component {
   }
 
   onChangeSelectFile() {
-    console.log('选中文件');
-    console.log(document.getElementById('uploadBtn').files[0].name);
-
     this.setState({
       fileStatus: true,
       fileName: document.getElementById('uploadBtn').files[0].name,
@@ -68,8 +53,9 @@ class ProjectModule extends React.Component {
     }
     const formData = new FormData();
     formData.append('file', document.getElementById('uploadBtn').files[0]);
-    // formData.append('projectId', document.getElementById('uploadBtn').files[0]);
-    // formData.append('projectName', document.getElementById('uploadBtn').files[0]);
+    formData.append('fileName', document.getElementById('uploadBtn').files[0].name);
+    formData.append('projectId', this.state.selectProjectId);
+    formData.append('projectName', this.state.selectProjectName);
     formData.append('uploadBy', getLoginInfo().userId);
     formData.append('token', getLoginInfo().token);
     window.$.ajax({
@@ -87,13 +73,13 @@ class ProjectModule extends React.Component {
       processData: false,
       success: (result) => {
         if (result.rspCode === rspInfo.RSP_SUCCESS) {
-          openNotice('success', '上传成功');
+          openNotice('success', result.rspInfo);
           this.setState({
             fileStatus: false,
             fileName: '',
           });
         } else {
-          openNotice('erroe', result.rspInfo);
+          openNotice('error', result.rspInfo);
         }
       },
       error: () => {
@@ -123,8 +109,29 @@ class ProjectModule extends React.Component {
     }
   }
 
+  onCallProjectMembers() {
+    const obj = this;
+    const opt = {
+      url: url.project.userListAll,
+      type: 'POST',
+      dataType: 'json',
+      data: { proId: obj.state.selectProjectId },
+    };
+    callAjax(opt, (result) => {
+      if (result.rspCode === rspInfo.RSP_SUCCESS) {
+        obj.setState({ member: result.rspData.list });
+      }
+    }, () => {
+      //
+    });
+  }
+
+  handleTimeChange(date, dateString) {
+    console.log('From: ', dateString[0], ', to: ', dateString[1]);
+    this.props.form.setFieldsValue({ modStart: dateString[0], modEnd: dateString[1] });
+  }
+
   openProjectModal() {
-    //
     console.log('打开项目模态框');
     this.setState({ modalVisible: !this.state.modalVisible });
   }
@@ -142,67 +149,59 @@ class ProjectModule extends React.Component {
 
   handleReset() {
     this.props.form.resetFields();
-  }
-
-  // 模态框确认点击事件，修改子页面props valid状态,触发子页面执行回调
-  handleModalOk() {
+    this.props.form.setFieldsValue({ modStart: '', modEnd: '' });
     this.setState({
-      modelIsValid: true,
-    }, () => {
-      this.setState({ modelIsValid: false });
+      selectProjectName: '',
+      selectProjectId: '',
+      member: [],
     });
   }
 
   // 模态框子页面回调
   callbackValid(success, data) {
-    //
     console.log(success, data);
+    const obj = this;
+    if (success) {
+      this.setState({
+        modalVisible: !this.state.modalVisible,
+        selectProjectName: data.PRO_NAME,
+        selectProjectId: data.PRO_ID,
+      }, () => {
+        this.props.form.setFieldsValue({ proName: data.PRO_NAME, proId: data.PRO_ID });
+        obj.onCallProjectMembers();
+      });
+    } else {
+      openNotice('error', '选择项目失败');
+    }
   }
 
-
+  // 执行分配任务上传
   realSubmit() {
-    // const data = filterObject(this.props.form.getFieldsValue());
-    // callAjax({
-    //   url: url.user.updatePwd,
-    //   type: 'POST',
-    //   data: {
-    //     newPwd: MD5(data.newPwd).toString(),
-    //     oldPwd: MD5(data.oldPwd).toString(),
-    //   },
-    // }, (result) => {
-    //   if (result.rspCode === rspInfo.RSP_SUCCESS) {
-    //     this.setState({
-    //       modalVisible: false,
-    //       confirmLoading: false,
-    //       buttonLoading: true,
-    //     }, () => {
-    //       const info = getLoginInfo();
-    //       info.isFirstLogin = 0;
-    //       setLoginInfo(info);
-    //       this.props.form.resetFields();
-    //     });
-    //     openNotice('success', '修改密码成功，即将跳转到登录页面');
-    //     setTimeout(() => {
-    //       window.location.href = '/#/login';
-    //     }, 2000);
-    //   } else {
-    //     openNotice('error', result.rspInfo, '提示');
-    //     this.setState({
-    //       confirmLoading: false,
-    //     });
-    //   }
-    // }, (error) => {
-    //   console.log(error);
-    //   openNotice('error', '发送请求失败');
-    // });
+    const data = filterObject(this.props.form.getFieldsValue());
+    const opt = {
+      url: url.task.add,
+      type: 'POST',
+      data,
+    };
+    callAjax(opt, (result) => {
+      if (result.rspCode === rspInfo.RSP_SUCCESS) {
+        openNotice('success', '分配任务成功');
+        this.handleReset();
+      } else {
+        openNotice('error', result.rspInfo);
+      }
+    }, (error) => {
+      console.log(error);
+      openNotice('error', '发送请求失败');
+    });
   }
 
   render() {
     const obj = this;
-    const { getFieldProps } = this.props.form;
+    const { getFieldProps, getFieldValue } = this.props.form;
     const formItemLayout = {
       labelCol: { span: 6 },
-      wrapperCol: { span: 14 },
+      wrapperCol: { span: 16 },
     };
 
     return (
@@ -213,12 +212,21 @@ class ProjectModule extends React.Component {
               <h2>分配任务</h2>
               <hr />
               <Form className="compact-form" horizontal >
+                <div hidden>
                 <Row>
                   <Col sm={24} md={24}>
                     <FormItem label="选择项目" {...formItemLayout}>
-                      <Input readOnly onClick={ this.openProjectModal.bind(this) }
+                      <Input {...getFieldProps('proId')} />
+                    </FormItem>
+                  </Col>
+                </Row>
+                </div>
+                <Row>
+                  <Col sm={24} md={24}>
+                    <FormItem label="选择项目" {...formItemLayout}>
+                      <Input readOnly placeholder="请选择项目" onClick={ this.openProjectModal.bind(this) }
                         {...getFieldProps('proName', {
-                          initialValue: '',
+                          initialValue: this.state.selectProjectName !== '' ? this.state.selectProjectName : '',
                           validate: [{
                             rules: [
                               { required: true, message: '请选择项目', whitespace: true },
@@ -234,7 +242,7 @@ class ProjectModule extends React.Component {
                 <Row>
                   <Col sm={24} md={24}>
                     <FormItem label="选择成员" {...formItemLayout}>
-                      <TdSelect {...getFieldProps('userName', {
+                      <TdSelect {...getFieldProps('userId', {
                         initialValue: '',
                         validate: [{
                           rules: [
@@ -244,8 +252,8 @@ class ProjectModule extends React.Component {
                         }],
                         validateFirst: true,
                       }) }
-                        dict={{ dict_value: 'TYPE_ID', dict_text: 'TYPE_TEXT' }}
-                        data={obj.state.member} blankText="请先选择项目"
+                        dict={{ dict_value: 'USER_ID', dict_text: 'USER_NAME' }}
+                        data={obj.state.member} blankText="请选择项目成员"
                       />
                     </FormItem>
                   </Col>
@@ -272,16 +280,9 @@ class ProjectModule extends React.Component {
                   <Col sm={24} md={24}>
                     <FormItem label="起止日期" {...formItemLayout}>
                       <RangePicker placeholder="请选择起止日期" style={{ width: '100%' }} format="yyyy-MM-dd"
-                        {...getFieldProps('modTime', {
-                          initialValue: '',
-                          validate: [{
-                            rules: [
-                              { required: true, message: '请选择起止日期', whitespace: true },
-                            ],
-                            trigger: 'onBlur',
-                          }],
-                          validateFirst: true,
-                        }) }
+                        onChange={this.handleTimeChange.bind(this)}
+                        value={[getFieldValue('modStart'), getFieldValue('modEnd')]}
+                        defaultValue={[...getFieldProps('modStart'), ...getFieldProps('modEnd')]}
                       />
                     </FormItem>
                   </Col>
@@ -320,7 +321,7 @@ class ProjectModule extends React.Component {
                 onCancel={() => { this.setState({ modalVisible: false }); }}
                 footer={null} width="900"
               >
-                <ProjectModal
+                <ProjectModuleModal
                   validCallback={(success, data) => {
                     this.callbackValid(success, data);
                   } }
@@ -353,7 +354,6 @@ class ProjectModule extends React.Component {
 }
 
 ProjectModule.defaultProps = {
-  valid: false,        // 校验状态，通过父页面修改该值触发componentWillReceiveProps方法
   formData: {},        // 父页面表单数据
   formReset: false,     // 表单重置标识位
 };

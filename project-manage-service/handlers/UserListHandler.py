@@ -30,9 +30,16 @@ class UserListHandler(BaseHandler):
         userAuth = self.get_argument('userAuth', None)
         userLogin = self.get_argument('userLogin', None)
         userCreator = self.get_current_user()['userId'] or None
-        dao = UserDao()
-        list, total = dao.getList(page, size, userId, userName, userAuth, userLogin, userCreator)
-        rsp.setSuccess()
-        rsp.setData(list, total)
+        try:
+            dao = UserDao()
+            list, total = dao.getList(page, size, userId, userName, userAuth, userLogin, userCreator)
+            rsp.setSuccess()
+            rsp.setData(list, total)
+        except Exception as e:
+            print('ERROR {}'.format(e))
+            Utils.log('ERROR {}'.format(e))
+            rsp.setInfo("查询用户列表失败")
+        finally:
+            del(dao)
         self.write(rsp.toDict())
         return

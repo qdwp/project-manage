@@ -13,7 +13,7 @@ from utils.Switch import switch
 from utils.Config import UPLOADPATH
 
 from handlers.BaseHandler import BaseHandler
-from handlers.dao.ProjectUserDao import ProjectUserDao
+from handlers.dao.ProjectFileDao import ProjectFileDao
 
 class ProFileUploadHandler(BaseHandler):
     """
@@ -28,18 +28,27 @@ class ProFileUploadHandler(BaseHandler):
         rsp = RspInfo()
         try:
             upload_path=os.path.join(os.path.dirname(__file__), UPLOADPATH)
+            fileName = self.get_argument('fileName', None)
+            projectId = self.get_argument('projectId', None)
+            projectName = self.get_argument('projectName', None)
             uploadBy = self.get_argument('uploadBy', None)
-            print("文件上传" + uploadBy)
             file_metas = self.request.files['file']
             for meta in file_metas:
                 filename=meta['filename']
-                filepath=os.path.join(upload_path,filename)
+                filepath=os.path.join(upload_path, filename)
                 with open(filepath,'wb') as up:
                     up.write(meta['body'])
+
+            # 入库
+            dao = ProjectFileDao()
+            res = dao.inset(fileName, projectId, projectName, uploadBy)
             rsp.setSuccess()
-            rsp.setInfo("文件上传成功")
+            if res:
+                rsp.setInfo("上传文件成功")
+            else:
+                rsp.setInfo("上传文件入库失败")
         except Exception as e:
-            Utils.log('ERROR 文件上传失败 {}'.format(e))
-            rsp.setInfo("文件上传失败")
+            Utils.log('ERROR 上传文件失败 {}'.format(e))
+            rsp.setInfo("上传文件失败")
         self.write(rsp.toDict())
         return

@@ -1,12 +1,12 @@
 import React from 'react';
-import TdCard from '../../../component/TdCard';
-import { openNotice, buildTableTip } from '../../../common/antdUtil';
-import { url } from '../../../config/server';
-import { rspInfo } from '../../../common/authConstant';
-import TdPageTable from '../../../component/TdPageTable';
-import ProjectManageSearchForm from '../projectManage/ProjectManageSearchForm';
+import TdCard from '../../component/TdCard';
+import { openNotice, buildTableTip } from '../../common/antdUtil';
+import { url } from '../../config/server';
+import { rspInfo } from '../../common/authConstant';
+import TdPageTable from '../../component/TdPageTable';
+import ProjectManageSearchForm from '..//project/ProjectManage/ProjectManageSearchForm';
 
-class ProjectModal extends React.Component {
+class BugAppendModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -89,4 +89,4 @@ class ProjectModal extends React.Component {
   }
 }
 
-export default ProjectModal;
+export default BugAppendModal;

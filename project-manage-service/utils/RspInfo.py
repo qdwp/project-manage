@@ -8,18 +8,18 @@ class RspInfo(object):
     返回值信息统一格式化
     请求成功: "0000"
     请求失败: "9999"
-    登录超时: "0001"
-    异地登录: "0002"
+    登录超时: "_SSO"
+    异地登录: "_SSO"
     """
 
-    def __init__(self):
-        self.rspCode = '9999'
-        self.rspInfo = u'请求数据失败'
-        self.rspData = {}
+    def __init__(self, code = '9999', info = '请求数据失败', data = {}):
+        self.rspCode = code
+        self.rspInfo = info
+        self.rspData = data
 
     def setSuccess(self):
         self.rspCode = '0000'
-        self.rspInfo = u'请求数据成功'
+        self.rspInfo = '请求数据成功'
 
     def setData(self, list = None, total = 0):
         self.rspData = {

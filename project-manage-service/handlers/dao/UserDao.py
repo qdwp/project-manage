@@ -19,8 +19,8 @@ class UserDao(object):
                 SELECT USER_ID,USER_NAME,USER_AUTH,USER_LOGIN,USER_CREATOR,USER_CRE_TIME
                 FROM man_auth_user
                 WHERE 1=1
-                {}{}{}{}{}
-                ORDER BY USER_ID
+                {}{}{}{}{}{}
+                ORDER BY USER_AUTH, USER_ID
                 LIMIT {start}, {size};
                 """.format(
                     ' AND USER_ID like "%{}%"'.format(userId) if userId else '',
@@ -28,6 +28,7 @@ class UserDao(object):
                     ' AND USER_AUTH = "{}"'.format(userAuth) if userAuth else '',
                     ' AND USER_LOGIN = "{}"'.format(userLogin) if userLogin else '',
                     ' AND USER_CREATOR = "{}"'.format(userCreator) if userCreator and userCreator != 'admin' else '',
+                    ' OR USER_ID = "{}"'.format(userCreator) if userCreator and userCreator != 'admin' else '',
                     start=start,
                     size=size
                     )
@@ -36,12 +37,14 @@ class UserDao(object):
             sqlTotal = """
                 SELECT COUNT(1) FROM man_auth_user
                 WHERE 1=1
-                {}{}{}{};
+                {}{}{}{}{}{};
                 """.format(
                     ' AND USER_ID like "%{}%"'.format(userId) if userId else '',
-                    ' AND USER_NAME like "%{}%"'.format(userName) if userName else '',
+                    ' AND USER_Name like "%{}%"'.format(userName) if userName else '',
                     ' AND USER_AUTH = "{}"'.format(userAuth) if userAuth else '',
-                    ' AND USER_LOGIN = "{}"'.format(userLogin) if userLogin else ''
+                    ' AND USER_LOGIN = "{}"'.format(userLogin) if userLogin else '',
+                    ' AND USER_CREATOR = "{}"'.format(userCreator) if userCreator and userCreator != 'admin' else '',
+                    ' OR USER_ID = "{}"'.format(userCreator) if userCreator and userCreator != 'admin' else '',
                     )
             total = PySQL.count(sqlTotal)
             return list, total
@@ -91,19 +94,20 @@ class UserDao(object):
             Utils.log('ERROR {}'.format(e))
         return count > 0
 
-    def update(self, userId, userName, userAuth, userLogin):
+    def update(self, userId, userName, userAuth, userLogin, currentAuth):
         """
         修改用户记录
         """
         count = 0
         try:
             sql = """
-                UPDATE man_auth_user SET 
+                UPDATE man_auth_user SET
                     USER_NAME='{}',
                     USER_AUTH='{}',
                     USER_LOGIN='{}'
-                WHERE USER_ID='{}';
-                """.format(userName, userAuth, userLogin, userId)
+                WHERE USER_ID='{}'
+                AND USER_AUTH > '{}';
+                """.format(userName, userAuth, userLogin, userId, currentAuth)
             Utils.log(sql) # print log
             count = PySQL.execute(sql)
         except Exception as e:
@@ -111,7 +115,7 @@ class UserDao(object):
             Utils.log('ERROR {}'.format(e))
         return count > 0
 
-    def delete(self, userId):
+    def delete(self, userId, currentAuth):
         """
         删除用户记录
         """
@@ -119,8 +123,9 @@ class UserDao(object):
         try:
             sql = """
                 DELETE FROM man_auth_user
-                WHERE USER_ID='{}';
-                """.format(userId)
+                WHERE USER_ID='{}'
+                AND USER_AUTH > '{}';
+                """.format(userId, currentAuth)
             Utils.log(sql) # print log
             count = PySQL.execute(sql)
         except Exception as e:
@@ -128,7 +133,7 @@ class UserDao(object):
             Utils.log('ERROR {}'.format(e))
         return count > 0
 
-    def reset(self, userId):
+    def reset(self, userId, currentAuth):
         """
         重置用户密码 111111
         """
@@ -146,8 +151,9 @@ class UserDao(object):
             sql = """
                 UPDATE man_auth_user
                 SET USER_PWD=Default
-                WHERE USER_ID='{}';
-                """.format(userId)
+                WHERE USER_ID='{}'
+                AND USER_AUTH >= '{}';
+                """.format(userId, currentAuth)
             Utils.log(sql) # print log
             count = PySQL.execute(sql)
             print(count)

@@ -30,9 +30,17 @@ class ProjectListHandler(BaseHandler):
         proType = self.get_argument('proType', None)
         proUse = self.get_argument('proUse', None)
         userCreator = self.get_current_user()['userId'] or None
-        dao = ProjectDao()
-        list, total = dao.getList(page, size, proId, proName, proType, proUse, userCreator)
-        rsp.setSuccess()
-        rsp.setData(list, total)
+
+        try:
+            dao = ProjectDao()
+            list, total = dao.getList(page, size, proId, proName, proType, proUse, userCreator)
+            rsp.setSuccess()
+            rsp.setData(list, total)
+        except Exception as e:
+            print('ERROR {}'.format(e))
+            Utils.log('ERROR {}'.format(e))
+            rsp.setInfo("查询项目列表失败")
+        finally:
+            del(dao)
         self.write(rsp.toDict())
         return

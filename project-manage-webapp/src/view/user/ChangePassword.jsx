@@ -195,7 +195,7 @@ class ChangePassword extends React.Component {
                 <FormItem wrapperCol={{ span: 12, offset: 7 }}>
                   <Button type="primary" loading={this.state.buttonLoading} onClick={this.handleSubmit.bind(this)}>确定</Button>
                   &nbsp;&nbsp;&nbsp;
-                            <Button type="ghost" disabled={this.state.buttonLoading} onClick={this.handleReset.bind(this)}>重置</Button>
+                  <Button type="ghost" disabled={this.state.buttonLoading} onClick={this.handleReset.bind(this)}>重置</Button>
                 </FormItem>
               </Col>
             </Row>

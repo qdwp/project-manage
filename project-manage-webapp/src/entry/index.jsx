@@ -17,11 +17,26 @@ import Error410 from '../view/error/410/Error410';
 import UserManage from '../view/user/UserManage';
 import ChangePassword from '../view/user/ChangePassword';
 
+// 我的待办
+import ApplyAccount from '../view/event/ApplyAccount';
+
 // 项目管理
-import ProjectManage from '../view/project/projectManage/ProjectManage';
+import ProjectManage from '../view/project/ProjectManage/ProjectManage';
 
 // 模块信息
 import ProjectModule from '../view/project/ProjectModule/ProjectModule';
+import ModuleManage from '../view/project/ProjectModule/ModuleManage';
+
+// 项目进度
+import ProjectRate from '../view/project/ProjectRate/ProjectRate';
+
+// 调试调优
+import BugAppend from '../view/bug/BugAppend';
+import BugManage from '../view/bug/BugManage';
+import BugRecord from '../view/bug/BugRecord';
+
+// 管理中心
+import DownloadManage from '../view/setting/DownloadManage';
 
 // 针对IE8的补丁(_IEVersion from index.html)
 if (!isNaN(window._IEVersion) && window._IEVersion < 9) {
@@ -82,10 +97,16 @@ ReactDOM.render(
           <Route path="error/410" component={Error410} />
           <Route onEnter={checkAuth} path="home" component={Home} />
           <Route path="user/manage" component={UserManage} />
+          <Route path="user/apply" component={ApplyAccount} />
           <Route path="user/password" component={ChangePassword} />
           <Route path="project/manage" component={ProjectManage} />
           <Route path="project/module" component={ProjectModule} />
-
+          <Route path="module/manage" component={ModuleManage} />
+          <Route path="project/rate" component={ProjectRate} />
+          <Route path="bug/append" component={BugAppend} />
+          <Route path="bug/manage" component={BugManage} />
+          <Route path="bug/notice" component={BugRecord} />
+          <Route path="setting/download" component={DownloadManage} />
 
           <Route path="*" component={Error404} />
         </Route>

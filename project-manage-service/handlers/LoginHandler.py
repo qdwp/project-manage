@@ -8,6 +8,7 @@ from jose import jwt
 
 from utils.Utils import Utils
 from utils.RspInfo import RspInfo
+from dbservers.Redis import MyRedis
 from handlers.BaseHandler import BaseHandler
 from handlers.dao.LoginDao import LoginDao
 
@@ -38,6 +39,10 @@ class LoginHandler(BaseHandler):
                 }
                 token = Utils.makeToken(info)
                 info['token'] = token
+
+                # 登录信息 token 保存 Redis
+                MyRedis().set(info['userId'], token)
+
                 rsp.setSuccess()
                 rsp.setObj(info)
             else:

@@ -17,11 +17,19 @@ class Utils(object):
     @staticmethod
     def md5(string):
         """
-        对密码进行MD5加密, 结果字符串大写
+        对密码进行MD5加密, 结果字符串大写32位
         @params password
         @retrun md5string
         """
         return hashlib.md5(string.encode('utf8')).hexdigest().upper()
+
+    @staticmethod
+    def makeId():
+        """
+        根据时间抽生成ID, 结果字符串大写
+        @retrun md5string
+        """
+        return Utils.md5(str(Utils.getDotTime()))
 
     @staticmethod
     def verifyToken(token):

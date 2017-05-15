@@ -1,17 +1,15 @@
 import React from 'react';
-import { Button, Modal, Table, Icon, Transfer, Form } from 'antd';
-import QueueAnim from 'rc-queue-anim';
+import { Button, Modal } from 'antd';
 import TdCard from '../../component/TdCard';
 import { openNotice, buildTableTip } from '../../common/antdUtil';
 import { url } from '../../config/server';
 import { rspInfo } from '../../common/authConstant';
-import { callAjax, parseDate, getLoginInfo } from '../../common/util';
+import { callAjax, getLoginInfo } from '../../common/util';
 import { filterObject } from '../../common/util';
 import TdPageTable from '../../component/TdPageTable';
 import UserManageSearchForm from './UserManageSearchForm';
 import UserManageEditForm from './UserManageEditForm';
 const confirm = Modal.confirm;
-const ButtonGroup = Button.Group;
 
 class UserManage extends React.Component {
   constructor(props) {
@@ -107,13 +105,19 @@ class UserManage extends React.Component {
 
   // 删除用户
   handlerDeleteBtnClick() {
-    if (this.state.tableSelectedRows.length > 0) {
-      // console.log('删除数据', this.state.tableSelectedRowKeys, this.state.tableSelectedRows);
+    if (this.state.tableSelectedRows.length > 1) {
+      openNotice('warning', '不允许同时删除多个用户');
+      return;
+    } else if (this.state.tableSelectedRows.length > 0) {
       const userId = this.state.tableSelectedRowKeys[0];
+      if (userId === getLoginInfo().userId) {
+        openNotice('warning', '不允许删除自身账户');
+        return;
+      }
       const obj = this;
       confirm({
-        title: `您是否确认要删除用户 ${userId} ?`,
-        content: '',
+        title: '删除',
+        content: `您是否确认要删除用户 ${userId} ?`,
         onOk() {
           const opt = {
             url: url.user.delete,
@@ -154,8 +158,8 @@ class UserManage extends React.Component {
       const userId = this.state.tableSelectedRowKeys[0];
       const obj = this;
       confirm({
-        title: `您是否确认要重置用户 ${userId} 的密码 ?`,
-        content: '',
+        title: '重置',
+        content: `您是否确认要重置用户 ${userId} 的密码 ?`,
         onOk() {
           const opt = {
             url: url.user.reset,
@@ -357,7 +361,7 @@ class UserManage extends React.Component {
           <UserManageSearchForm
             onSubmit={this.handleFormSubmit.bind(this)}
             onReset={this.handleFormReset.bind(this)}
-            />
+          />
           <p className="br" />
 
           <TdPageTable rowKey={record => record.USER_ID}

@@ -24,6 +24,9 @@ class ProUserAppendHandler(BaseHandler):
         """
         rsp = RspInfo()
         for case in switch(opt):
+            if case('all'):
+                rsp = self.queryListAll()
+                break
             if case('list'):
                 rsp = self.queryList()
                 break
@@ -41,6 +44,28 @@ class ProUserAppendHandler(BaseHandler):
                 return
         self.write(rsp.toDict())
         return
+
+    def queryListAll(self):
+        """
+        加载小组中不在当前项目中的成员
+        """
+        token = self.get_argument('token', None)
+        proId = self.get_argument('proId', None)
+        
+        rsp = RspInfo()
+        try:
+            dao = ProjectUserDao()
+            list = dao.getListAll(proId)
+            rsp.setSuccess()
+            rsp.setData(list)
+        except Exception as e:
+            print('ERROR {}'.format(e))
+            Utils.log('ERROR {}'.format(e))
+            rsp.setInfo("加载成员失败")
+        finally:
+            del(dao)
+        return rsp
+
 
     def queryList(self):
         """

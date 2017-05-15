@@ -94,8 +94,8 @@ class ProjectMemberInfo extends React.Component {
   handleRemoveClick(text, record, key) {
     const obj = this;
     confirm({
-      title: '您是否确认要从项目中移除该成员 ?',
-      content: '',
+      title: '删除',
+      content: '您是否确认要从项目中移除该成员 ?',
       onOk() {
         const opt = {
           url: url.project.userRemove,
