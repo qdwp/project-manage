@@ -195,7 +195,7 @@ class TaskDebugDao(object):
                 UPDATE man_pro_bug
                 SET
                     BUG_STATUS='{status}',
-                    HANDLE_BY='{handleBy}'
+                    HANDLE_BY='{handleBy}',
                     HANDLE_TIME='{handleTime}'
                 WHERE BUG_ID='{bugId}';
                 """.format(
