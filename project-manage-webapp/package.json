@@ -49,7 +49,7 @@
   ],
   "scripts": {
     "start": "npm run dev",
-    "dev": "dora -p 8001 --plugins webpack,hmr,proxy,livereload?enableJs=false",
+    "dev": "dora -p 8000 --plugins webpack,hmr,proxy,livereload?enableJs=false",
     "prd": "node app",
     "lint": "eslint --ext .js,.jsx src",
     "build": "atool-build -o ./dist/prd/v1.0.0"

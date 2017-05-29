@@ -4,7 +4,7 @@ import { openNotice, buildTableTip } from '../../../common/antdUtil';
 import { url } from '../../../config/server';
 import { rspInfo } from '../../../common/authConstant';
 import TdPageTable from '../../../component/TdPageTable';
-import ProjectManageSearchForm from '../projectManage/ProjectManageSearchForm';
+import ProjectManageSearchForm from '../ProjectManage/ProjectManageSearchForm';
 
 class ProjectModuleModal extends React.Component {
   constructor(props) {

@@ -10,7 +10,7 @@ app.get("/", function(req, res) {
   res.sendFile(path.join(__dirname, "index.html"));
 })
 //设置端口
-app.set("port", process.env.PORT || 3003);
+app.set("port", process.env.PORT || 9000);
 
 http.createServer(app).listen(app.get("port"), function(){
 	console.log("Express server listening on port " + app.get("port"));
